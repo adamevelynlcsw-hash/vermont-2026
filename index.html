@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vermont ski week</title>
+<meta name="theme-color" content="#1d3b34">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231d3b34'/%3E%3Cpath d='M6 50 26 18l10 16 6-8 16 24z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+
+<!-- =====================================================================
+     TRIP DATA. This block is the only thing that changes when a new
+     Wanderlog export arrives. See UPDATE_PROMPT.md and README.md.
+     Privacy: first names only. No confirmation or loyalty numbers here.
+     Hours arrays run Sunday to Saturday.
+     status: "confirmed" | "optional" | "backup"
+     src:    "plan" (in the Wanderlog export) | "extra" (curated idea)
+     ===================================================================== -->
+<script id="trip-data">
+const TRIP = {
+  updated: "2026-11-26",
+  source: "Wanderlog export dated November 26, 2026",
+  start: "2026-12-26",
+  end: "2027-01-01",
+
+  travelers: [
+    { name: "Adam",   from: "Orlando", rides: "Snowboard" },
+    { name: "Anna",   from: "Orlando", rides: "Ski" },
+    { name: "Johnny", from: "Orlando", rides: "Ski or board" },
+    { name: "Kaya",   from: "Orlando", rides: "Ski" },
+    { name: "Lily",   from: "Orlando", rides: "Ski" },
+    { name: "Levi",   from: "Seattle", rides: "Snowboard" },
+    { name: "Jess",   from: "Seattle", rides: "Snowboard" }
+  ],
+
+  flights: [
+    { group: "Orlando crew", who: "Adam, Anna, Johnny, Kaya, Lily", dir: "Getting there", date: "2026-12-26",
+      legs: [
+        { code: "AA 1706", track: "AAL1706", from: "Orlando (MCO)", dep: "6:00 AM", to: "Philadelphia (PHL)", arr: "8:33 AM" },
+        { code: "AA 4370", track: "AAL4370", from: "Philadelphia (PHL)", dep: "10:12 AM", to: "Boston (BOS)", arr: "11:41 AM" }
+      ] },
+    { group: "Seattle crew", who: "Levi, Jess", dir: "Getting there", date: "2026-12-25",
+      note: "Red-eye. Leaves Friday night, lands Saturday morning, about five hours ahead of the Orlando crew.",
+      legs: [
+        { code: "DL 473", track: "DAL473", from: "Seattle (SEA)", dep: "10:00 PM Pacific, Fri Dec 25", to: "Boston (BOS)", arr: "6:33 AM Eastern, Sat Dec 26" }
+      ] },
+    { group: "Orlando crew", who: "Adam, Anna, Johnny, Kaya, Lily", dir: "Going home", date: "2027-01-01",
+      legs: [
+        { code: "AA 724", track: "AAL724", from: "Boston (BOS)", dep: "9:00 AM", to: "Orlando (MCO)", arr: "12:22 PM" }
+      ] },
+    { group: "Seattle crew", who: "Levi, Jess", dir: "Going home", date: "2027-01-01",
+      note: "Long wait at Logan after the cars go back at 7:00 AM.",
+      legs: [
+        { code: "DL 797", track: "DAL797", from: "Boston (BOS)", dep: "6:35 PM Eastern", to: "Seattle (SEA)", arr: "10:05 PM Pacific" }
+      ] }
+  ],
+
+  cars: {
+    company: "Budget Car Rental, Boston Logan Airport",
+    address: "15 Transportation Way, Boston, MA 02128",
+    phone: "617-568-6601",
+    pickup: "Sat Dec 26, 2:00 PM",
+    dropoff: "Fri Jan 1, 7:00 AM",
+    vehicles: ["Standard Elite SUV", "Fullsize pickup, 4WD (ski gear rides in the bed)"],
+    drive: "Boston to Brownsville is about 130 miles, 2 hr 15 min to 2 hr 45 min in good conditions."
+  },
+
+  lodging: {
+    name: "Holiday Inn Club Vacations Mount Ascutney Resort",
+    address: "485 Hotel Road, Brownsville, VT 05037",
+    phone: "802-484-7711",
+    checkin: "Sat Dec 26, from 4:00 PM",
+    checkout: "Fri Jan 1, by 10:00 AM (we leave about 4:15 AM)",
+    details: [
+      "Three-bedroom villa with a full kitchen. Most dinners are cook-in.",
+      "On site: The Maple Kitchen restaurant, indoor pool, arcade, game room, fire pit.",
+      "Front desk is staffed 7:00 AM to 11:00 PM.",
+      "Mount Ascutney State Park is about a 15 minute walk."
+    ],
+    wiki: "Mount Ascutney"
+  },
+
+  ski: {
+    mountain: "pico",
+    days: "Mon Dec 28, Tue Dec 29, Wed Dec 30",
+    facts: [
+      "Six of us have 3-day P-Days passes. They are tied to each person and cannot be swapped. Pick them up at Pico first thing Monday.",
+      "Johnny buys military tickets at Pico: $69 per peak day, three days.",
+      "Lessons for Anna, Lily and Kaya as needed. Book directly with Pico.",
+      "Aim for first chair. Eat lunch at about 11:00 AM or 1:30 PM to miss the rush.",
+      "Drive is about 50 to 55 minutes each way on US-4 through Woodstock.",
+      "Check newengland511.org the night before each ski day for road conditions."
+    ],
+    rentals: [
+      "Everyone's gear is reserved at Totem Pole Ski Shop in Ludlow for three days.",
+      "Pick up Sun Dec 27 at about 2:00 PM. Day-before pickup is free after 2:00 PM.",
+      "Return Wed Dec 30 by about 5:00 PM. Leave Pico by about 4:00 PM."
+    ]
+  },
+
+  days: [
+    { date: "2026-12-26", title: "Arrival", places: ["budget","resort","butcher","maple"], items: [
+      { time: "6:33 AM", status: "confirmed", text: "Levi and Jess land in Boston on DL 473 from Seattle." },
+      { time: "6:00 AM", status: "confirmed", text: "Orlando crew leaves MCO on AA 1706, connects in Philadelphia on AA 4370, lands in Boston at 11:41 AM." },
+      { time: "2:00 PM", status: "confirmed", text: "Pick up both rental cars at Budget, Boston Logan.", p: "budget" },
+      { time: "Afternoon", status: "confirmed", text: "Drive to Brownsville, about 2 hr 15 min to 2 hr 45 min. Check in at the resort from 4:00 PM and settle in.", p: "resort" },
+      { status: "optional", text: "Grab provisions at Brownsville Butcher & Pantry. It closes at 7:00 PM, so this only works if the drive goes smoothly.", p: "butcher" },
+      { status: "optional", text: "Dinner at The Maple Kitchen, right at the resort, 4:00 to 9:00 PM.", p: "maple" },
+      { status: "optional", text: "Keep the evening loose in case of travel delays." }
+    ] },
+    { date: "2026-12-27", title: "Ski rental pickup and a look around", places: ["totem","apm","saga","storrs"], items: [
+      { time: "About 2:00 PM", status: "confirmed", text: "Pick up the three-day ski rentals at Totem Pole Ski Shop in Ludlow. Sunday rental hours are 7:30 AM to 5:00 PM.", p: "totem" },
+      { status: "optional", text: "Flexible sightseeing around Windsor, Vermont and Cornish, New Hampshire before the pickup." },
+      { status: "optional", text: "American Precision Museum.", p: "apm", warn: "Winter hours are weekdays only, so it looks closed this Sunday." },
+      { status: "optional", text: "Saint-Gaudens National Historical Park.", p: "saga", warn: "Buildings are closed for winter. The grounds are open in daylight for a walk." },
+      { status: "optional", text: "Storrs Hill Ski Area for a warm-up after the pickup.", p: "storrs", warn: "Sunday hours end at 5:00 PM and it is about an hour from Ludlow, so this is a short late-afternoon session, not an evening one." }
+    ] },
+    { date: "2026-12-28", title: "Pico, ski day 1", places: ["pico","longtrail"], items: [
+      { time: "Early", status: "confirmed", text: "Drive to Pico Mountain, about 50 to 55 minutes on US-4 through Woodstock. Aim for first chair.", p: "pico" },
+      { status: "confirmed", text: "Pick up the six P-Days passes. Johnny buys his military ticket." },
+      { status: "optional", text: "Lessons for Anna, Lily and Kaya as needed, booked directly with Pico." },
+      { time: "11:00 AM or 1:30 PM", status: "optional", text: "Lunch on either side of the noon rush." },
+      { time: "Night before", status: "confirmed", text: "Check newengland511.org for road conditions." }
+    ] },
+    { date: "2026-12-29", title: "Pico, ski day 2", places: ["pico","longtrail"], items: [
+      { time: "Early", status: "confirmed", text: "Second day at Pico Mountain. Same drive: about 50 to 55 minutes on US-4 through Woodstock.", p: "pico" },
+      { time: "Night before", status: "confirmed", text: "Check newengland511.org for road conditions." }
+    ] },
+    { date: "2026-12-30", title: "Pico, ski day 3, and gear goes back", places: ["pico","totem","montshire","simonpearce","quechee","wrj"], items: [
+      { time: "Early", status: "confirmed", text: "Third day at Pico Mountain.", p: "pico" },
+      { time: "About 4:00 PM", status: "confirmed", text: "Leave Pico. Leaving a little earlier gives some slack for the gear return." },
+      { time: "By 5:00 PM", status: "confirmed", text: "Return all rentals to Totem Pole Ski Shop in Ludlow, about 30 minutes from Pico.", p: "totem" },
+      { status: "backup", text: "If the weather is bad: Montshire Museum of Science.", p: "montshire" },
+      { status: "backup", text: "If the weather is bad: Simon Pearce glassblowing and restaurant.", p: "simonpearce" },
+      { status: "backup", text: "If the weather is bad: wander Quechee or White River Junction.", p: "quechee" },
+      { time: "Night before", status: "confirmed", text: "Check newengland511.org for road conditions." }
+    ] },
+    { date: "2026-12-31", title: "Woodstock day and New Year's Eve", places: ["mabi","billings","monvert","sante","oakes","cloudland"], items: [
+      { status: "confirmed", text: "Marsh-Billings-Rockefeller National Historical Park.", p: "mabi", warn: "The mansion and visitor center are closed for winter. The carriage-road trails are open for a walk or snowshoe." },
+      { status: "confirmed", text: "Billings Farm & Museum, right next door. Farm animals and, on some days, horse-drawn sleigh rides.", p: "billings" },
+      { status: "optional", text: "Meal in Woodstock. Options: Santé, Oakes & Evelyn, Cloudland Farm, Mon Vert Cafe.", p: "sante", warn: "Mon Vert Cafe is listed as closed on Thursdays. New Year's Eve tables go early, so reserve soon." },
+      { time: "Evening", status: "confirmed", text: "Back to the villa early. Pack the cars tonight because we leave at about 4:15 AM." }
+    ] },
+    { date: "2027-01-01", title: "Heading home", places: ["resort","budget"], items: [
+      { time: "About 4:15 AM", status: "confirmed", text: "Check out and leave Brownsville.", p: "resort" },
+      { time: "7:00 AM", status: "confirmed", text: "Both rental cars are due back at Budget, Boston Logan.", p: "budget" },
+      { time: "9:00 AM", status: "confirmed", text: "Orlando crew flies AA 724, landing in Orlando at 12:22 PM." },
+      { time: "6:35 PM", status: "confirmed", text: "Levi and Jess fly DL 797, landing in Seattle at 10:05 PM Pacific." },
+      { status: "optional", text: "No side trips today. Brownsville Butcher & Pantry does not open until 7:00 AM, after we have left.", p: "butcher" }
+    ] }
+  ],
+
+  places: [
+    /* ---------- base, travel ---------- */
+    { id: "resort", name: "Mount Ascutney Resort (our villa)", type: "stay", area: "Brownsville", src: "plan",
+      address: "485 Hotel Road, Brownsville, VT 05037", phone: "802-484-7711", wiki: "Mount Ascutney",
+      blurb: "Home base for the week. Kitchen, pool, arcade, fire pit." },
+    { id: "budget", name: "Budget Car Rental, Boston Logan", type: "travel", area: "Boston", src: "plan",
+      address: "15 Transportation Way, Boston, MA 02128", phone: "617-568-6601",
+      blurb: "Pickup Sat Dec 26 at 2:00 PM. Return Fri Jan 1 by 7:00 AM." },
+
+    /* ---------- ski ---------- */
+    { id: "pico", name: "Pico Mountain", type: "ski", area: "Mendon", src: "plan", drive: "50 to 55 min",
+      address: "73 Alpine Drive, Mendon, VT 05701", wiki: "Pico Mountain", url: "https://www.picomountain.com/",
+      blurb: "Our three ski days: Mon Dec 28, Tue Dec 29, Wed Dec 30." },
+    { id: "totem", name: "Totem Pole Ski Shop", type: "ski", area: "Ludlow", src: "plan", drive: "about 35 min",
+      address: "16.5 Pond Street, Ludlow, VT 05149", phone: "802-228-8447", wiki: "Ludlow (village), Vermont",
+      hours: ["7:30 AM to 6:00 PM","8:00 AM to 6:00 PM","8:00 AM to 6:00 PM","8:00 AM to 6:00 PM","8:00 AM to 6:00 PM","8:00 AM to 10:00 PM","7:30 AM to 8:00 PM"],
+      blurb: "Where all our rental gear comes from. Rental counter hours are shorter than shop hours: Sunday 7:30 AM to 5:00 PM, Monday to Saturday 8:00 AM to 5:00 PM." },
+    { id: "storrs", name: "Storrs Hill Ski Area", type: "ski", area: "Lebanon NH", src: "plan", drive: "about 40 min", status: "optional",
+      address: "60 Spring Street, Lebanon, NH 03766", url: "https://skistorrshill.com/", wiki: "Lebanon, New Hampshire",
+      hours: ["11:00 AM to 5:00 PM","Closed","Closed","Closed","Closed","5:00 to 9:00 PM","11:00 AM to 9:00 PM"],
+      blurb: "Small volunteer-run hill with lights and one platter lift, which takes a try or two on a snowboard. Lift tickets were free the last two winters. Opens only when there is enough snow, so check their page first." },
+    { id: "whaleback", name: "Whaleback Mountain", type: "ski", area: "Enfield NH", src: "plan", drive: "about 40 min", status: "optional",
+      address: "160 Whaleback Mountain Road, Enfield, NH 03748", phone: "603-448-5500", wiki: "Whaleback (ski area)",
+      blurb: "Backup hill with night skiing. Our rentals go back Dec 30, so you would rent there." },
+    { id: "pticket", name: "Pico P-Ticket voucher (a fourth ski day)", type: "ski", area: "Mendon", src: "plan", status: "optional",
+      blurb: "One-day Pico ticket that anyone can use, with no blackout dates. $112 through Dec 3, then $129 from Dec 4 to Dec 25, then it goes off sale. Confirm price and terms before buying." },
+    { id: "ascutneyoutdoors", name: "Ascutney Outdoors tubing hill and T-bar", type: "ski", area: "Brownsville", src: "extra", drive: "5 min",
+      address: "449 Ski Tow Road, Brownsville, VT 05037", url: "https://www.ascutneyoutdoors.org/", wiki: "Mount Ascutney",
+      blurb: "Why go: a rope-tow tubing hill and a little ski hill run by volunteers, minutes from the villa. Natural snow only, so it runs when the weather allows. Check that it is open that day." },
+    { id: "backupmtns", name: "Bad-weather backup mountains", type: "ski", area: "Around", src: "extra", status: "backup", wiki: "Okemo Mountain",
+      blurb: "If Pico is a washout or closed: Saskadena Six in Woodstock (about 25 min), Okemo in Ludlow (35 to 40 min), Mount Sunapee in New Hampshire (about 45 min). Day tickets cost extra." },
+
+    /* ---------- things to do: in our plan ---------- */
+    { id: "pathoflife", name: "Great River Outfitters & the Path of Life Sculpture Garden", type: "do", area: "Windsor", src: "plan", drive: "10 to 15 min",
+      address: "36 Park Road, Windsor, VT 05089", wiki: "Windsor, Vermont",
+      blurb: "Riverside sculpture garden and outfitter. Ask about winter snowshoe rentals." },
+    { id: "gmnf", name: "Green Mountain National Forest ranger office", type: "do", area: "Mendon", src: "plan", drive: "about 50 min",
+      address: "4387 U.S. Route 4 East, Mendon, VT 05701", wiki: "Green Mountain National Forest",
+      hours: ["Closed","9:00 AM to 3:00 PM","Closed","9:00 AM to 3:00 PM","Closed","9:00 AM to 3:00 PM","Closed"],
+      blurb: "Maps and trail advice, on the road to Pico." },
+    { id: "ata", name: "Ascutney Trails Association trails", type: "do", area: "Brownsville", src: "plan", drive: "5 min",
+      address: "449 Ski Tow Road, Brownsville, VT 05037", wiki: "Mount Ascutney",
+      hours: ["Open 24 hours","Open 24 hours","Open 24 hours","Open 24 hours","Open 24 hours","Open 24 hours","Open 24 hours"],
+      blurb: "Trail network on the old ski mountain. Good for a snowshoe or winter walk." },
+    { id: "windsortrail", name: "Mount Ascutney Windsor Trail", type: "do", area: "Windsor", src: "plan", drive: "about 15 min",
+      address: "86 Back Mountain Road, Windsor, VT 05089", wiki: "Mount Ascutney",
+      blurb: "Summit trail. A real winter hike: traction and daylight needed." },
+    { id: "mabi", name: "Marsh-Billings-Rockefeller National Historical Park", type: "do", area: "Woodstock", src: "plan", drive: "about 25 min",
+      address: "69 Old River Road, Woodstock, VT 05091", wiki: "Marsh-Billings-Rockefeller National Historical Park", url: "https://www.nps.gov/mabi/planyourvisit/planyourvisit-winter.htm",
+      blurb: "Vermont's national park. In winter the buildings are closed, and the carriage roads up Mount Tom are open in daylight. About four miles are free to walk or snowshoe. Other trails need a Woodstock Nordic Center pass." },
+    { id: "billings", name: "Billings Farm & Museum", type: "do", area: "Woodstock", src: "plan", drive: "about 25 min",
+      address: "69 Old River Road, Woodstock, VT 05091", phone: "802-457-2355", wiki: "Billings Farm & Museum", url: "https://billingsfarm.org/",
+      hours: ["10:00 AM to 5:00 PM","10:00 AM to 5:00 PM","10:00 AM to 5:00 PM","10:00 AM to 5:00 PM","10:00 AM to 5:00 PM","10:00 AM to 5:00 PM","10:00 AM to 5:00 PM"],
+      blurb: "Working dairy farm with a holiday program. Last year it ran 10:00 AM to 4:00 PM daily over Christmas week, with sleigh rides on some days, so plan to be done by 4:00." },
+    { id: "montshire", name: "Montshire Museum of Science", type: "do", area: "Norwich", src: "plan", drive: "about 35 min", status: "backup",
+      address: "1 Montshire Road, Norwich, VT 05055", wiki: "Montshire Museum of Science",
+      hours: ["10:00 AM to 5:00 PM","10:00 AM to 5:00 PM","10:00 AM to 5:00 PM","10:00 AM to 5:00 PM","10:00 AM to 5:00 PM","10:00 AM to 5:00 PM","10:00 AM to 5:00 PM"],
+      blurb: "Hands-on science museum. A bad-weather pick for Dec 30." },
+    { id: "vins", name: "VINS Nature Center (raptors and wild bird rehab)", type: "do", area: "Quechee", src: "plan", drive: "25 to 30 min",
+      address: "149 Natures Way, Quechee, VT 05059", phone: "802-359-5000", wiki: "Vermont Institute of Natural Science", url: "https://vinsweb.org/visit",
+      hours: ["10:00 AM to 4:00 PM","10:00 AM to 4:00 PM","10:00 AM to 4:00 PM","10:00 AM to 4:00 PM","10:00 AM to 4:00 PM","10:00 AM to 4:00 PM","10:00 AM to 4:00 PM"],
+      blurb: "Owls, hawks and eagles up close, plus a treetop canopy walk. Adults $20, ages 4 to 17 $17. Their Forest of Lights runs on winter evenings with a separate ticket." },
+    { id: "arrowhead", name: "Arrowhead Recreation Area", type: "do", area: "Claremont NH", src: "plan", drive: "about 25 min",
+      address: "18 Robert Easter Way, Claremont, NH 03743", wiki: "Claremont, New Hampshire",
+      blurb: "Small community hill with tubing and skiing. Check which days it is running." },
+    { id: "apm", name: "American Precision Museum", type: "do", area: "Windsor", src: "plan", drive: "10 to 15 min", status: "optional",
+      address: "196 Main Street, Windsor, VT 05089", phone: "802-674-5781", wiki: "American Precision Museum", url: "https://americanprecision.org/",
+      hours: ["Closed","10:00 AM to 4:00 PM","10:00 AM to 4:00 PM","10:00 AM to 4:00 PM","10:00 AM to 4:00 PM","10:00 AM to 4:00 PM","Closed"],
+      blurb: "Old armory full of working machine tools. Winter hours are weekdays only." },
+    { id: "saga", name: "Saint-Gaudens National Historical Park", type: "do", area: "Cornish NH", src: "plan", drive: "about 20 min", status: "optional",
+      address: "139 Saint Gaudens Road, Cornish, NH 03745", wiki: "Saint-Gaudens National Historical Park", url: "https://www.nps.gov/saga/",
+      blurb: "Sculptor's estate. Buildings are closed until late May. The grounds and outdoor sculptures are open in daylight, with paths that are not cleared of snow." },
+    { id: "quechee", name: "Quechee village", type: "do", area: "Quechee", src: "plan", drive: "25 to 30 min", status: "backup", wiki: "Quechee, Vermont",
+      blurb: "Village browsing. Pairs with Simon Pearce, VINS and the gorge." },
+    { id: "wrj", name: "White River Junction", type: "do", area: "White River Junction", src: "plan", drive: "about 30 min", status: "backup", wiki: "White River Junction, Vermont",
+      blurb: "Old railroad town with shops and good food. See Tuckerbox and Big Fatty's BBQ." },
+
+    /* ---------- things to do: extra ideas ---------- */
+    { id: "gorge", name: "Quechee Gorge", type: "do", area: "Quechee", src: "extra", drive: "25 to 30 min",
+      address: "5800 Woodstock Road, Hartford, VT 05047", wiki: "Quechee Gorge",
+      blurb: "Why go: a 165-foot-deep gorge you can see from the US-4 bridge sidewalk in five minutes. Free, and half a mile from VINS." },
+    { id: "cornishbridge", name: "Cornish-Windsor Covered Bridge", type: "do", area: "Windsor", src: "extra", drive: "10 to 15 min",
+      address: "Bridge Street, Windsor, VT 05089", wiki: "Cornish–Windsor Covered Bridge",
+      blurb: "Why go: one of the longest wooden covered bridges in the country, and you drive through it to New Hampshire. Quick photo stop on the way to Saint-Gaudens." },
+    { id: "nordic", name: "Woodstock Nordic Center snowshoes", type: "do", area: "Woodstock", src: "extra", drive: "about 25 min",
+      address: "76 South Street, Woodstock, VT 05091", phone: "802-457-6674", wiki: "Woodstock, Vermont", url: "https://www.woodstockinn.com/do/things-to-do/woodstock-nordic-center",
+      blurb: "Why go: rent snowshoes and walk Mount Peg or Mount Tom with no experience needed. Good for anyone skipping a ski day. Shop was listed as open 9:00 AM to 4:00 PM daily last season." },
+    { id: "woodstockvillage", name: "Woodstock village and the Middle Covered Bridge", type: "do", area: "Woodstock", src: "extra", drive: "about 25 min",
+      address: "Mountain Avenue, Woodstock, VT 05091", wiki: "Woodstock, Vermont",
+      blurb: "Why go: a walkable village green, shops, and a covered bridge right in town. Easy add-on to the Dec 31 plan." },
+    { id: "eagles", name: "Eagle watching on the Connecticut River", type: "do", area: "Windsor", src: "extra", drive: "10 to 15 min", wiki: "Connecticut River",
+      blurb: "Why go: bald eagles hunt the open water in winter. Bring binoculars and check recent sightings on eBird before picking a pull-off." },
+    { id: "statepark", name: "Mount Ascutney State Park winter walk", type: "do", area: "Brownsville", src: "extra", drive: "walk from the villa", wiki: "Mount Ascutney",
+      blurb: "Why go: snowshoe or boot-pack straight from the resort, no driving. Go in daylight." },
+    { id: "hanover", name: "Hanover and the Dartmouth green", type: "do", area: "Hanover NH", src: "extra", drive: "about 35 min", wiki: "Hanover, New Hampshire",
+      blurb: "Why go: college-town main street with bookshops and coffee. A little past our usual 30 minute limit." },
+
+    /* ---------- food: in our plan ---------- */
+    { id: "butcher", name: "Brownsville Butcher & Pantry", type: "food", area: "Brownsville", src: "plan", drive: "5 min",
+      address: "871 Vermont Route 44, Brownsville, VT 05037",
+      hours: ["7:00 AM to 7:00 PM","Closed","7:00 AM to 7:00 PM","7:00 AM to 7:00 PM","7:00 AM to 7:00 PM","7:00 AM to 7:00 PM","7:00 AM to 7:00 PM"],
+      blurb: "Butcher, grocery and kitchen. Our closest spot for cook-in supplies." },
+    { id: "maple", name: "The Maple Kitchen", type: "food", area: "Brownsville", src: "plan", drive: "at the resort",
+      address: "485 Hotel Road, Brownsville, VT 05037",
+      hours: ["4:00 to 9:00 PM","4:00 to 9:00 PM","Closed","Closed","4:00 to 9:00 PM","4:00 to 9:00 PM","4:00 to 9:00 PM"],
+      blurb: "The resort's own restaurant. Easy for arrival night." },
+    { id: "windsorstation", name: "Windsor Station Restaurant & Barroom", type: "food", area: "Windsor", src: "plan", drive: "10 to 15 min",
+      address: "26 Depot Avenue, Windsor, VT 05089",
+      hours: ["4:00 to 8:00 PM","Closed","Closed","4:00 to 9:00 PM","4:00 to 9:00 PM","4:00 to 9:00 PM","4:00 to 9:00 PM"],
+      blurb: "Dinner in an old train station." },
+    { id: "frazers", name: "Frazer's Place", type: "food", area: "Windsor", src: "plan", drive: "about 15 min",
+      address: "2066 U.S. Route 5 North, Windsor, VT 05089",
+      hours: ["7:00 AM to 8:00 PM","7:00 AM to 8:00 PM","7:00 AM to 8:00 PM","7:00 AM to 8:00 PM","7:00 AM to 8:00 PM","7:00 AM to 8:00 PM","7:00 AM to 8:00 PM"],
+      blurb: "Roadside diner, open every day." },
+    { id: "homestyle", name: "Homestyle Restaurant", type: "food", area: "Ludlow", src: "plan", drive: "about 35 min",
+      address: "119 Main Street, Ludlow, VT 05149",
+      hours: ["4:30 to 9:00 PM","Closed","Closed","4:30 to 9:00 PM","4:30 to 9:00 PM","4:30 to 9:00 PM","4:30 to 9:00 PM"],
+      blurb: "Dinner spot in Ludlow, handy after the Dec 30 gear return." },
+    { id: "downtowngrocery", name: "The Downtown Grocery", type: "food", area: "Ludlow", src: "plan", drive: "about 35 min",
+      address: "41 South Depot Street, Ludlow, VT 05149",
+      hours: ["Closed","5:30 to 9:00 PM","Closed","Closed","Closed","5:30 to 9:00 PM","5:30 to 9:00 PM"],
+      blurb: "Small chef-run dinner restaurant. Limited nights." },
+    { id: "loft", name: "The Loft Tavern", type: "food", area: "Ludlow", src: "plan", drive: "about 35 min",
+      address: "300 Mountain Road, Ludlow, VT 05149",
+      hours: ["11:30 AM to 9:00 PM","Closed","Closed","Closed","3:00 to 9:00 PM","11:30 AM to 10:00 PM","11:30 AM to 10:00 PM"],
+      blurb: "Tavern by Okemo." },
+    { id: "nonnos", name: "Nonno's Cucina", type: "food", area: "Ludlow", src: "plan", drive: "about 35 min",
+      address: "47 South Depot Street, Ludlow, VT 05149",
+      hours: ["11:00 AM to 9:00 PM","11:00 AM to 9:00 PM","11:00 AM to 9:00 PM","11:00 AM to 9:00 PM","11:00 AM to 9:00 PM","11:00 AM to 10:00 PM","11:00 AM to 10:00 PM"],
+      blurb: "Italian in Ludlow, open on Wed Dec 30 when we return gear." },
+    { id: "oakes", name: "Oakes & Evelyn", type: "food", area: "Woodstock", src: "plan", drive: "about 25 min",
+      address: "43 Senior Lane, Woodstock, VT 05091",
+      hours: ["7:30 to 10:30 AM","7:30 to 10:30 AM","7:30 to 10:30 AM and 5:00 to 9:00 PM","7:30 to 10:30 AM and 5:00 to 9:00 PM","7:30 to 10:30 AM and 5:00 to 9:00 PM","7:30 to 10:30 AM and 5:00 to 9:00 PM","7:30 to 10:30 AM and 5:00 to 9:00 PM"],
+      blurb: "Breakfast daily, dinner Tuesday to Saturday. A New Year's Eve dinner option." },
+    { id: "sante", name: "Santé", type: "food", area: "Woodstock", src: "plan", drive: "about 25 min",
+      address: "61 Central Street, Woodstock, VT 05091",
+      hours: ["Closed","5:00 to 8:30 PM","5:00 to 8:30 PM","5:00 to 8:30 PM","12:00 to 3:00 PM and 5:00 to 8:30 PM","12:00 to 3:00 PM and 5:00 to 9:00 PM","12:00 to 3:00 PM and 5:00 to 9:00 PM"],
+      blurb: "Village restaurant with lunch on Thursdays, which fits Dec 31." },
+    { id: "monvert", name: "Mon Vert Cafe", type: "food", area: "Woodstock", src: "plan", drive: "about 25 min",
+      address: "28 Central Street, Woodstock, VT 05091",
+      hours: ["7:30 AM to 5:00 PM","7:30 AM to 5:00 PM","7:30 AM to 5:00 PM","7:30 AM to 5:00 PM","Closed","7:30 AM to 5:00 PM","7:30 AM to 5:00 PM"],
+      blurb: "Breakfast and lunch cafe. Listed as closed on Thursdays." },
+    { id: "cloudland", name: "Cloudland Farm", type: "food", area: "Woodstock", src: "plan", drive: "about 35 min",
+      address: "1101 Cloudland Road, Woodstock, VT 05091",
+      blurb: "Farm dinners by reservation. Hours are not listed, and the last stretch is a back road, so go in daylight or skip it in snow." },
+    { id: "simonpearce", name: "Simon Pearce", type: "food", area: "Quechee", src: "plan", drive: "25 to 30 min", status: "backup",
+      address: "1760 Quechee Main Street, Quechee, VT 05059", wiki: "Simon Pearce",
+      hours: ["10:00 AM to 6:00 PM","10:00 AM to 4:00 PM","10:00 AM to 4:00 PM","10:00 AM to 6:00 PM","10:00 AM to 6:00 PM","10:00 AM to 8:00 PM","10:00 AM to 8:00 PM"],
+      blurb: "Watch glassblowers work, then eat above the waterfall. Reserve the restaurant." },
+    { id: "tuckerbox", name: "Tuckerbox", type: "food", area: "White River Junction", src: "plan", drive: "about 30 min",
+      address: "1 South Main Street, White River Junction, VT 05001",
+      hours: ["9:00 AM to 3:00 PM and 5:00 to 8:00 PM","Closed","9:00 AM to 3:00 PM and 5:00 to 8:00 PM","9:00 AM to 3:00 PM and 5:00 to 8:00 PM","9:00 AM to 3:00 PM and 5:00 to 8:00 PM","9:00 AM to 3:00 PM and 5:00 to 8:30 PM","9:00 AM to 3:00 PM and 5:00 to 8:30 PM"],
+      blurb: "Turkish cafe by day, Turkish dinner by night." },
+    { id: "bigfattys", name: "Big Fatty's BBQ", type: "food", area: "White River Junction", src: "plan", drive: "about 30 min",
+      address: "186 South Main Street, White River Junction, VT 05001",
+      hours: ["12:00 to 8:00 PM","Closed","Closed","12:00 to 8:00 PM","12:00 to 8:00 PM","12:00 to 8:00 PM","12:00 to 8:00 PM"],
+      blurb: "Barbecue and a big beer list." },
+    { id: "publichouse", name: "Public House Pub", type: "food", area: "Quechee", src: "plan", drive: "25 to 30 min",
+      address: "20 Public Way, Quechee, VT 05059",
+      hours: ["1:00 to 6:45 PM","3:00 to 8:00 PM","3:00 to 8:00 PM","3:00 to 8:00 PM","1:00 to 8:00 PM","12:00 to 8:00 PM","12:00 to 8:00 PM"],
+      blurb: "Pub by the Quechee covered bridge." },
+
+    /* ---------- food: extra ideas ---------- */
+    { id: "harpoon", name: "Harpoon Riverbend Taps", type: "food", area: "Windsor", src: "extra", drive: "10 to 15 min",
+      address: "336 Ruth Carney Drive, Windsor, VT 05089", phone: "802-674-5491", wiki: "Harpoon Brewery",
+      hours: ["11:00 AM to 6:00 PM","11:00 AM to 6:00 PM","11:00 AM to 6:00 PM","11:00 AM to 8:00 PM","11:00 AM to 8:00 PM","11:00 AM to 8:00 PM","11:00 AM to 8:00 PM"],
+      blurb: "Why go: brewery taproom with a big room that seats a group, heated huts outside, and the closest brewery to the villa. Order a flight and the pretzel." },
+    { id: "artisanspark", name: "Artisans Park", type: "food", area: "Windsor", src: "extra", drive: "10 to 15 min",
+      address: "71 Artisans Way, Windsor, VT 05089", wiki: "Windsor, Vermont",
+      blurb: "Why go: cheese, a distillery, jam makers and glass in one loop next to Harpoon and the sculpture garden. Good cook-in shopping. Shop hours vary, so check before going." },
+    { id: "longtrail", name: "Long Trail Brewing", type: "food", area: "Bridgewater Corners", src: "extra", drive: "on the way home from Pico",
+      address: "5520 U.S. Route 4, Bridgewater Corners, VT 05035", phone: "802-672-5011", wiki: "Long Trail Brewing Company", url: "https://longtrail.com/visit-us/",
+      blurb: "Why go: riverside brewpub directly on our US-4 drive back from Pico, about 15 minutes from the mountain. It opens at noon and closes early evening, and sources disagree on Monday and Tuesday, so call before counting on it." },
+    { id: "kingarthur", name: "King Arthur Baking cafe and store", type: "food", area: "Norwich", src: "extra", drive: "about 35 min",
+      address: "135 U.S. Route 5 South, Norwich, VT 05055", wiki: "King Arthur Baking",
+      blurb: "Why go: the flour company's own bakery. Pastries and bread to bring back to the villa. Pairs with the Montshire. Check hours." },
+    { id: "sugarbush", name: "Sugarbush Farm", type: "food", area: "Woodstock", src: "extra", drive: "about 30 min",
+      address: "591 Sugarbush Farm Road, Woodstock, VT 05091",
+      blurb: "Why go: free tastings of farm cheddar and four grades of maple syrup at a working hill farm. The road in is steep and unpaved, so go in daylight and good weather. Check hours." }
+  ],
+
+  links: [
+    { label: "Road conditions (New England 511)", url: "https://newengland511.org/" },
+    { label: "Pico Mountain conditions", url: "https://www.picomountain.com/the-mountain/conditions-weather" },
+    { label: "Brownsville weather forecast", url: "https://forecast.weather.gov/MapClick.php?lat=43.47&lon=-72.47" }
+  ]
+};
+</script>
+
+<style>
+:root{
+  --spruce:#1d3b34; --spruce2:#2c5a4e; --snow:#f3f6f7; --paper:#ffffff; --ink:#14212b; --mute:#566874;
+  --line:#d5dee3; --ice:#dbe9ef; --green:#1f8a4c; --blue:#1c5fb8; --black:#111; --warn:#8a4b00; --warnbg:#fff3dc;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif; --body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:var(--body);font-size:17px;line-height:1.5;color:var(--ink);background:var(--snow)}
+a{color:var(--blue)}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid #f2a900;outline-offset:2px}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;font-weight:700;letter-spacing:.2px}
+
+/* hero */
+.hero{position:relative;background:linear-gradient(#bfd6e2,#e9f1f4 70%);overflow:hidden}
+.hero svg{display:block;width:100%;height:clamp(90px,20vw,170px);margin-top:-6px}
+.hero-text{position:relative;z-index:1;padding:20px 16px 0;max-width:980px;margin:0 auto}
+.hero h1{font-size:clamp(40px,10vw,76px);color:var(--spruce);text-transform:none}
+.hero p{margin:4px 0 0;font-size:clamp(15px,3.6vw,19px);color:#25424f;font-weight:500}
+.flake{position:absolute;top:-10px;width:5px;height:5px;border-radius:50%;background:#fff;opacity:.9;animation:fall linear infinite;pointer-events:none}
+@keyframes fall{to{transform:translate(-30px,280px);opacity:.2}}
+@media (prefers-reduced-motion:reduce){.flake{display:none}}
+
+/* nav + search */
+.bar{position:sticky;top:0;z-index:10;background:var(--spruce);color:#fff}
+.bar-in{max-width:980px;margin:0 auto;padding:8px 10px}
+.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:0 0 auto;border:0;background:none;color:#cfe0da;font-family:var(--display);font-size:20px;font-weight:600;padding:6px 12px;border-radius:6px;cursor:pointer}
+.tabs button[aria-selected=true]{background:#fff;color:var(--spruce)}
+.search{display:flex;margin-top:8px}
+.search input{flex:1;min-width:0;border:0;border-radius:6px;padding:10px 12px;font-size:16px;background:#fff;color:var(--ink)}
+.search button{margin-left:6px;border:1.5px solid #86a89d;background:none;color:#fff;border-radius:6px;padding:0 12px;cursor:pointer}
+
+main{max-width:980px;margin:0 auto;padding:18px 14px 60px}
+section[hidden]{display:none}
+h2{font-size:34px;color:var(--spruce);margin:6px 0 4px}
+h3{font-size:24px;margin:22px 0 8px}
+.lede{margin:0 0 14px;color:var(--mute);max-width:62ch}
+.small{font-size:14.5px;color:var(--mute)}
+
+/* trail-sign status markers */
+.mk{display:inline-block;width:15px;height:15px;flex:0 0 15px;vertical-align:-2px}
+.mk.confirmed{background:var(--green);border-radius:50%}
+.mk.optional{background:var(--blue)}
+.mk.backup{background:var(--black);transform:rotate(45deg) scale(.82)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin:10px 0 0;padding:0;list-style:none;font-size:15px}
+.legend li{display:flex;align-items:center;gap:8px}
+
+/* panels */
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:0 0 14px}
+.panel h3{margin-top:0}
+.count{font-family:var(--display);font-weight:700;font-size:58px;line-height:1;color:var(--spruce)}
+.grid2{display:grid;gap:14px}
+@media(min-width:720px){.grid2{grid-template-columns:1fr 1fr}}
+.kv{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 14px}
+.kv dt{color:var(--mute);font-size:15px}
+.kv dd{margin:0;font-weight:500}
+ul.plain{margin:0;padding-left:20px}
+ul.plain li{margin:4px 0}
+.people{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:0;list-style:none}
+.people li{border:1px solid var(--line);border-radius:8px;padding:6px 10px;background:var(--snow)}
+.people b{display:block;font-family:var(--display);font-size:21px;line-height:1.1}
+.people span{font-size:13.5px;color:var(--mute)}
+
+/* days: each header is a trail sign */
+.day{margin:0 0 18px;background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.day.today{border:2px solid var(--green)}
+.sign{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px;background:var(--spruce);color:#fff;padding:10px 16px}
+.sign .dow{font-family:var(--display);font-weight:700;font-size:30px;line-height:1;white-space:nowrap}
+.sign .ttl{font-family:var(--display);font-weight:500;font-size:22px;line-height:1.1;color:#d8e8e2}
+.items{list-style:none;margin:0;padding:0}
+.items li{display:grid;grid-template-columns:15px 1fr;gap:12px;padding:11px 16px;border-top:1px solid var(--line)}
+.items li:first-child{border-top:0}
+.items .mk{margin-top:5px}
+.when{font-family:var(--display);font-weight:600;font-size:19px;color:var(--spruce2);display:block;line-height:1.2}
+.warn{display:block;margin-top:6px;background:var(--warnbg);color:var(--warn);border-left:4px solid #e0a020;padding:6px 10px;border-radius:0 6px 6px 0;font-size:15px}
+.linkbtn{border:0;background:none;padding:0;color:var(--blue);text-decoration:underline;cursor:pointer;font-size:15px}
+.dayhours{padding:10px 16px 14px;border-top:1px solid var(--line);background:#f8fafb;font-size:15px}
+.dayhours b{font-family:var(--display);font-size:18px;display:block;margin-bottom:2px;color:var(--mute);font-weight:600}
+.dayhours div{display:flex;justify-content:space-between;gap:14px;padding:2px 0}
+.closed{color:#b3261e;font-weight:600}
+
+/* flights */
+.leg{display:grid;grid-template-columns:auto 1fr;gap:2px 14px;padding:10px 0;border-top:1px solid var(--line)}
+.leg:first-of-type{border-top:0}
+.leg .code{font-family:var(--display);font-weight:700;font-size:24px;color:var(--spruce);grid-row:span 2;align-self:center}
+.who{font-size:15px;color:var(--mute);margin:2px 0 6px}
+
+/* explore */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.chip{border:1.5px solid var(--spruce);background:#fff;color:var(--spruce);border-radius:999px;padding:6px 14px;cursor:pointer;font-weight:500;font-size:15.5px}
+.chip[aria-pressed=true]{background:var(--spruce);color:#fff}
+.filters select{border:1.5px solid var(--spruce);border-radius:999px;padding:6px 12px;background:#fff;font-size:15.5px;max-width:100%}
+.cards{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+.ph{position:relative;aspect-ratio:16/9;background:var(--ice) center/cover no-repeat}
+.ph.none{aspect-ratio:auto;height:8px;background:var(--spruce2)}
+.ph a{position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,.6);color:#fff;font-size:11.5px;padding:1px 6px;border-radius:4px;text-decoration:none}
+.card .in{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card h4{font-family:var(--display);font-size:23px;line-height:1.1;margin:0;font-weight:700}
+.tags{display:flex;flex-wrap:wrap;gap:6px;font-size:13.5px}
+.tag{border-radius:4px;padding:1px 7px;background:var(--ice);color:#23404e;font-weight:500}
+.tag.plan{background:#dff1e6;color:#14592f}
+.tag.extra{background:#fde9c8;color:#6b4300}
+.card p{margin:0;font-size:15.5px}
+.acts{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:auto;padding-top:6px;font-size:15px}
+details.hrs{font-size:14.5px}
+details.hrs summary{cursor:pointer;color:var(--mute)}
+details.hrs table{border-collapse:collapse;margin-top:4px}
+details.hrs td{padding:1px 12px 1px 0;vertical-align:top}
+.openon{font-size:15px;font-weight:600}
+.empty{padding:26px 16px;text-align:center;color:var(--mute);background:#fff;border:1px dashed var(--line);border-radius:10px}
+footer{max-width:980px;margin:0 auto;padding:0 14px 40px;font-size:14px;color:var(--mute)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+<div class="hero-text">
+    <h1>Vermont ski week</h1>
+    <p>Saturday Dec 26 to Friday Jan 1, based in Brownsville under Mount Ascutney.</p>
+  </div>
+  <svg viewBox="0 0 800 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <path d="M0 190 90 150l70 28 110-78 80 52 70-34 120 62 90-44 170 60V260H0z" fill="#9db9c7"/>
+    <path d="M0 220 120 168l60 30 150-112 46 34 34-20 150 104 80-34 160 44V260H0z" fill="#2c5a4e"/>
+    <path d="M330 86l46 34 34-20 40 28-52 6-30-14-28 22-44-10z" fill="#fff"/>
+    <path d="M0 240c120-26 220-8 330-18s230-30 470-6v44H0z" fill="#fff"/>
+    <g fill="#1d3b34"><path d="M96 232l10-26 10 26zM120 236l8-22 8 22zM640 228l11-30 11 30zM668 234l8-22 8 22zM700 230l9-24 9 24z"/></g>
+  </svg>
+  </header>
+
+<div class="bar">
+  <div class="bar-in">
+    <div class="tabs" role="tablist" aria-label="Sections">
+      <button role="tab" data-tab="home" aria-selected="true">Home</button>
+      <button role="tab" data-tab="days" aria-selected="false">Day by day</button>
+      <button role="tab" data-tab="travel" aria-selected="false">Flights and cars</button>
+      <button role="tab" data-tab="ski" aria-selected="false">Skiing</button>
+      <button role="tab" data-tab="explore" aria-selected="false">Things to do and eat</button>
+    </div>
+    <form class="search" role="search" onsubmit="return false">
+      <input id="q" type="search" placeholder="Search the trip: BBQ, Woodstock, Tuesday, rentals" aria-label="Search the trip" autocomplete="off">
+      <button type="button" id="qclear" hidden>Clear</button>
+    </form>
+  </div>
+</div>
+
+<main>
+  <section id="home"></section>
+  <section id="days" hidden></section>
+  <section id="travel" hidden></section>
+  <section id="ski" hidden></section>
+  <section id="explore" hidden></section>
+  <section id="results" hidden aria-live="polite"></section>
+</main>
+
+<footer>
+  <p id="foot"></p>
+  <p>Hours are the ones listed in the plan and can change over the holidays. Call ahead for anything that matters. Photos load from Wikipedia and link to their source pages.</p>
+</footer>
+
+<script>
+(function(){
+"use strict";
+const $ = (s,r=document)=>r.querySelector(s);
+const esc = s => String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const P = Object.fromEntries(TRIP.places.map(p=>[p.id,p]));
+const DOW = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const d0 = s => { const [y,m,d]=s.split("-").map(Number); return new Date(y,m-1,d); };
+const nice = s => { const d=d0(s); return DOW[d.getDay()]+", "+MON[d.getMonth()]+" "+d.getDate(); };
+const short = s => { const d=d0(s); return DOW[d.getDay()].slice(0,3)+" "+MON[d.getMonth()]+" "+d.getDate(); };
+const todayStr = () => { const n=new Date(); return n.getFullYear()+"-"+String(n.getMonth()+1).padStart(2,"0")+"-"+String(n.getDate()).padStart(2,"0"); };
+const STATUS = { confirmed:"Confirmed", optional:"Optional", backup:"Backup or weather call" };
+const TYPE = { do:"Things to do", food:"Food and drink", ski:"Skiing", stay:"Where we stay", travel:"Travel" };
+const mk = s => `<span class="mk ${s}" role="img" aria-label="${STATUS[s]}"></span>`;
+const mapUrl = p => "https://www.google.com/maps/dir/?api=1&destination="+encodeURIComponent(p.address||p.name);
+const lookUrl = p => "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(p.name+" "+(p.address||p.area));
+const hoursOn = (p,date) => p.hours ? p.hours[d0(date).getDay()] : null;
+const isClosed = h => /^closed/i.test(h||"");
+
+/* ---------- tabs ---------- */
+let current = "home";
+function show(tab, scrollTo){
+  current = tab;
+  document.querySelectorAll("main > section").forEach(s=>s.hidden = s.id!==tab);
+  document.querySelectorAll(".tabs button").forEach(b=>b.setAttribute("aria-selected", String(b.dataset.tab===tab)));
+  if(scrollTo){ const el=document.getElementById(scrollTo); if(el){ el.scrollIntoView({block:"start"}); window.scrollBy(0,-110); return; } }
+  const bar=$(".bar"); if(bar.getBoundingClientRect().top<=0) window.scrollTo(0, $(".hero").offsetHeight);
+}
+document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>{ $("#q").value=""; $("#qclear").hidden=true; show(b.dataset.tab); }));
+document.addEventListener("click",e=>{
+  const g=e.target.closest("[data-go]"); if(!g) return;
+  e.preventDefault(); $("#q").value=""; $("#qclear").hidden=true;
+  const [tab,id]=g.dataset.go.split(":");
+  if(tab==="explore" && id){ state.type="all"; state.src="all"; state.area="all"; state.day=""; renderExplore(); }
+  show(tab,id);
+});
+
+/* ---------- home ---------- */
+function renderHome(){
+  const t=todayStr(), start=d0(TRIP.start), end=d0(TRIP.end), now=d0(t);
+  const daysTo=Math.round((start-now)/864e5);
+  let lead;
+  if(now<start) lead=`<div class="count">${daysTo}</div><p style="margin:0"><b>${daysTo===1?"day":"days"} until we meet in Boston.</b> Cars are ready at 2:00 PM on Saturday Dec 26.</p>`;
+  else if(now>end) lead=`<p style="margin:0"><b>That's a wrap.</b> The plan stays here if you want to look back.</p>`;
+  else { const day=TRIP.days.find(d=>d.date===t); lead=`<p class="small" style="margin:0">Today</p><h3 style="margin:0 0 6px">${esc(nice(t))}: ${esc(day?day.title:"")}</h3><button class="linkbtn" data-go="days:day-${t}">See today's plan</button>`; }
+  const L=TRIP.lodging;
+  $("#home").innerHTML=`
+    <div class="grid2">
+      <div class="panel">${lead}</div>
+      <div class="panel"><h3>Where we're staying</h3>
+        <p style="margin:0 0 6px"><b>${esc(L.name)}</b><br>${esc(L.address)}</p>
+        <p style="margin:0"><a href="${mapUrl(L)}" target="_blank" rel="noopener">Directions</a> &nbsp; <a href="tel:${L.phone.replace(/\D/g,"")}">${esc(L.phone)}</a> &nbsp; <button class="linkbtn" data-go="travel:stay">Villa details</button></p>
+      </div>
+    </div>
+    <div class="panel"><h3>The week at a glance</h3>
+      <ul class="items" style="margin:0 -16px -14px">${TRIP.days.map(d=>`<li><span class="mk confirmed" aria-hidden="true" style="visibility:${d.date===t?"visible":"hidden"}"></span><span><button class="linkbtn" data-go="days:day-${d.date}" style="font-size:17px"><b>${esc(short(d.date))}</b></button> &nbsp;${esc(d.title)}</span></li>`).join("")}</ul>
+    </div>
+    <div class="panel"><h3>Who's coming</h3>
+      <ul class="people">${TRIP.travelers.map(p=>`<li><b>${esc(p.name)}</b><span>from ${esc(p.from)}, ${esc(p.rides.toLowerCase())}</span></li>`).join("")}</ul>
+    </div>
+    <div class="grid2">
+      <div class="panel"><h3>How to read the plan</h3>
+        <p style="margin:0">Markers borrow from ski trail signs.</p>
+        <ul class="legend"><li>${mk("confirmed")} Confirmed, it's happening</li><li>${mk("optional")} Optional, join if you want</li><li>${mk("backup")} Backup or weather call</li></ul>
+        <p class="small" style="margin:10px 0 0">In the places list, <span class="tag plan">In our plan</span> came from the family itinerary and <span class="tag extra">Extra idea</span> is a suggestion nobody has committed to.</p>
+      </div>
+      <div class="panel"><h3>Check before you drive</h3>
+        <ul class="plain">${TRIP.links.map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a></li>`).join("")}</ul>
+      </div>
+    </div>`;
+}
+
+/* ---------- days ---------- */
+function renderDays(){
+  const t=todayStr();
+  $("#days").innerHTML=`<h2>Day by day</h2><p class="lede">Times are Eastern. Tap a place name for its address, hours and directions.</p>
+    <ul class="legend" style="margin:0 0 16px"><li>${mk("confirmed")} Confirmed</li><li>${mk("optional")} Optional</li><li>${mk("backup")} Backup or weather call</li></ul>`+
+  TRIP.days.map(d=>{
+    const hrs=(d.places||[]).map(id=>P[id]).filter(p=>p&&p.hours).map(p=>{const h=hoursOn(p,d.date);return `<div><button class="linkbtn" data-go="explore:place-${p.id}">${esc(p.name)}</button><span class="${isClosed(h)?"closed":""}">${esc(h)}</span></div>`;}).join("");
+    return `<article class="day${d.date===t?" today":""}" id="day-${d.date}">
+      <div class="sign"><span class="dow">${esc(short(d.date))}</span><span class="ttl">${esc(d.title)}</span></div>
+      <ul class="items">${d.items.map(i=>`<li>${mk(i.status)}<div>${i.time?`<span class="when">${esc(i.time)}</span>`:""}${esc(i.text)}${i.p&&P[i.p]?` <button class="linkbtn" data-go="explore:place-${i.p}">${esc(P[i.p].type==="travel"||P[i.p].type==="stay"?"Address and directions":"Details")}</button>`:""}${i.warn?`<span class="warn"><b>Heads up.</b> ${esc(i.warn)}</span>`:""}</div></li>`).join("")}</ul>
+      ${hrs?`<div class="dayhours"><b>Listed hours this ${DOW[d0(d.date).getDay()]}</b>${hrs}</div>`:""}
+    </article>`;}).join("");
+}
+
+/* ---------- travel ---------- */
+function renderTravel(){
+  const C=TRIP.cars, L=TRIP.lodging;
+  const fl=dir=>TRIP.flights.filter(f=>f.dir===dir).map(f=>`<div class="panel"><h3>${esc(f.group)}</h3><p class="who">${esc(f.who)}</p>
+    ${f.legs.map(l=>`<div class="leg"><span class="code">${esc(l.code)}</span><span><b>${esc(l.from)}</b> ${esc(l.dep)}</span><span><b>${esc(l.to)}</b> ${esc(l.arr)}</span></div>`).join("")}
+    ${f.note?`<p class="small" style="margin:6px 0 0">${esc(f.note)}</p>`:""}
+    <p style="margin:8px 0 0;font-size:15px">${f.legs.map(l=>`<a href="https://www.flightaware.com/live/flight/${esc(l.track)}" target="_blank" rel="noopener">Track ${esc(l.code)}</a>`).join(" &nbsp; ")}</p></div>`).join("");
+  $("#travel").innerHTML=`<h2>Flights and cars</h2><p class="lede">Flight times can shift. Check your airline app the day before.</p>
+    <h3>Getting there, Sat Dec 26</h3><div class="grid2">${fl("Getting there")}</div>
+    <h3>Going home, Fri Jan 1</h3><div class="grid2">${fl("Going home")}</div>
+    <h3>Rental cars</h3>
+    <div class="panel"><p style="margin:0 0 8px"><b>${esc(C.company)}</b><br>${esc(C.address)}<br><a href="${mapUrl(C)}" target="_blank" rel="noopener">Directions</a> &nbsp; <a href="tel:${C.phone.replace(/\D/g,"")}">${esc(C.phone)}</a></p>
+      <dl class="kv"><dt>Pick up</dt><dd>${esc(C.pickup)}</dd><dt>Return</dt><dd>${esc(C.dropoff)}</dd><dt>Vehicles</dt><dd>${C.vehicles.map(esc).join("<br>")}</dd></dl>
+      <p class="small" style="margin:8px 0 0">${esc(C.drive)}</p></div>
+    <h3 id="stay">The villa</h3>
+    <div class="panel"><p style="margin:0 0 8px"><b>${esc(L.name)}</b><br>${esc(L.address)}<br><a href="${mapUrl(L)}" target="_blank" rel="noopener">Directions</a> &nbsp; <a href="tel:${L.phone.replace(/\D/g,"")}">${esc(L.phone)}</a></p>
+      <dl class="kv"><dt>Check in</dt><dd>${esc(L.checkin)}</dd><dt>Check out</dt><dd>${esc(L.checkout)}</dd></dl>
+      <ul class="plain" style="margin-top:8px">${L.details.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`;
+}
+
+/* ---------- ski ---------- */
+function renderSki(){
+  const S=TRIP.ski, pico=P[S.mountain], totem=P.totem;
+  const opts=TRIP.places.filter(p=>p.type==="ski"&&p.id!=="pico"&&p.id!=="totem");
+  $("#ski").innerHTML=`<h2>Skiing</h2><p class="lede">Three days at Pico Mountain: ${esc(S.days)}.</p>
+    <div class="grid2">
+      <div class="panel"><h3>${esc(pico.name)}</h3><p style="margin:0 0 8px">${esc(pico.address)}<br><a href="${mapUrl(pico)}" target="_blank" rel="noopener">Directions</a> &nbsp; <a href="${esc(pico.url)}" target="_blank" rel="noopener">Pico website</a></p>
+        <ul class="plain">${S.facts.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+      <div class="panel"><h3>Rental gear</h3><p style="margin:0 0 8px"><b>${esc(totem.name)}</b><br>${esc(totem.address)}<br><a href="${mapUrl(totem)}" target="_blank" rel="noopener">Directions</a> &nbsp; <a href="tel:${totem.phone.replace(/\D/g,"")}">${esc(totem.phone)}</a></p>
+        <ul class="plain">${S.rentals.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+    </div>
+    <h3>Extra and backup ski options</h3><p class="lede">None of these are booked.</p>
+    <div class="cards">${opts.map(card).join("")}</div>`;
+}
+
+/* ---------- explore ---------- */
+const state={type:"all",src:"all",area:"all",day:""};
+function card(p,day){
+  day = typeof day==="string" ? day : "";
+  const h=day?hoursOn(p,day):null;
+  const hrsTable=p.hours?`<details class="hrs"><summary>Listed hours</summary><table>${p.hours.map((x,i)=>`<tr><td>${DOW[i].slice(0,3)}</td><td${isClosed(x)?' class="closed"':""}>${esc(x)}</td></tr>`).join("")}</table></details>`:"";
+  return `<article class="card" id="place-${p.id}">
+    <div class="ph none"${p.wiki?` data-wiki="${esc(p.wiki)}"`:""}></div>
+    <div class="in"><h4>${esc(p.name)}</h4>
+      <div class="tags"><span class="tag ${p.src}">${p.src==="plan"?"In our plan":"Extra idea"}</span><span class="tag">${esc(p.area)}</span>${p.drive?`<span class="tag">${esc(p.drive)}</span>`:""}${p.status?`<span class="tag">${mk(p.status)} ${STATUS[p.status]}</span>`:""}</div>
+      ${day?`<div class="openon ${isClosed(h)?"closed":""}">${esc(short(day))}: ${h?esc(h):"hours not listed"}</div>`:""}
+      <p>${esc(p.blurb||"")}</p>
+      ${p.address?`<p class="small">${esc(p.address)}</p>`:""}
+      ${hrsTable}
+      <div class="acts">${p.address?`<a href="${mapUrl(p)}" target="_blank" rel="noopener">Directions</a>`:""}${p.phone?`<a href="tel:${p.phone.replace(/\D/g,"")}">${esc(p.phone)}</a>`:""}${p.url?`<a href="${esc(p.url)}" target="_blank" rel="noopener">Website</a>`:""}${p.type==="food"?`<a href="${lookUrl(p)}" target="_blank" rel="noopener">Photos and menu</a>`:""}</div>
+    </div></article>`;
+}
+function renderExplore(){
+  const areas=[...new Set(TRIP.places.filter(p=>p.type==="do"||p.type==="food"||p.type==="ski").map(p=>p.area))].sort();
+  let list=TRIP.places.filter(p=>p.type==="do"||p.type==="food"||p.type==="ski");
+  if(state.type!=="all") list=list.filter(p=>p.type===state.type);
+  if(state.src!=="all") list=list.filter(p=>p.src===state.src);
+  if(state.area!=="all") list=list.filter(p=>p.area===state.area);
+  if(state.day) list=list.slice().sort((a,b)=>rank(a)-rank(b));
+  function rank(p){ const h=hoursOn(p,state.day); return h==null?1:isClosed(h)?2:0; }
+  const chip=(k,v,label)=>`<button class="chip" data-f="${k}" data-v="${v}" aria-pressed="${state[k]===v}">${label}</button>`;
+  $("#explore").innerHTML=`<h2>Things to do and eat</h2>
+    <p class="lede">Everything saved in the family plan, plus extra ideas within about 30 minutes of the villa. Drive times are from Brownsville and are estimates.</p>
+    <div class="filters" role="group" aria-label="Filters">
+      ${chip("type","all","All")}${chip("type","do","Things to do")}${chip("type","food","Food and drink")}${chip("type","ski","Skiing")}
+      ${chip("src","plan","In our plan")}${chip("src","extra","Extra ideas")}
+      <select id="f-area" aria-label="Town"><option value="all">Any town</option>${areas.map(a=>`<option${state.area===a?" selected":""}>${esc(a)}</option>`).join("")}</select>
+      <select id="f-day" aria-label="Show hours for a day"><option value="">Show hours for a day</option>${TRIP.days.map(d=>`<option value="${d.date}"${state.day===d.date?" selected":""}>${esc(short(d.date))}</option>`).join("")}</select>
+    </div>
+    ${list.length?`<div class="cards">${list.map(p=>card(p,state.day)).join("")}</div>`:`<div class="empty">Nothing matches those filters. Tap All to start over.</div>`}`;
+  $("#explore").querySelectorAll(".chip").forEach(b=>b.addEventListener("click",()=>{ const k=b.dataset.f,v=b.dataset.v; state[k]=(k==="src"&&state.src===v)?"all":v; renderExplore(); }));
+  $("#f-area").addEventListener("change",e=>{state.area=e.target.value;renderExplore();});
+  $("#f-day").addEventListener("change",e=>{state.day=e.target.value;renderExplore();});
+  paintPhotos();
+}
+
+/* ---------- search ---------- */
+const INDEX=[];
+function buildIndex(){
+  TRIP.places.forEach(p=>INDEX.push({kind:p.src==="extra"?"Extra idea":"In our plan",cls:p.src,title:p.name,sub:[TYPE[p.type],p.area,p.drive].filter(Boolean).join(", "),text:[p.name,p.area,p.address,p.blurb,TYPE[p.type],p.type==="food"?"restaurant eat dinner lunch breakfast":"",(p.hours||[]).join(" ")].join(" "),go:(p.type==="travel"?"travel":p.type==="stay"?"travel:stay":"explore:place-"+p.id)}));
+  TRIP.days.forEach(d=>d.items.forEach(i=>INDEX.push({kind:"Itinerary",cls:"plan",title:short(d.date)+": "+d.title,sub:(i.time?i.time+". ":"")+i.text,text:[nice(d.date),d.title,i.time,i.text,i.warn,STATUS[i.status]].join(" "),go:"days:day-"+d.date})));
+  TRIP.flights.forEach(f=>INDEX.push({kind:"Flight",cls:"plan",title:f.legs.map(l=>l.code).join(" + ")+", "+f.group,sub:f.dir+". "+f.legs.map(l=>l.from+" "+l.dep+" to "+l.to+" "+l.arr).join("; "),text:["flight flights plane airport airline",f.group,f.who,f.dir,nice(f.date),f.legs.map(l=>Object.values(l).join(" ")).join(" ")].join(" "),go:"travel"}));
+  INDEX.push({kind:"Rental cars",cls:"plan",title:TRIP.cars.company,sub:"Pick up "+TRIP.cars.pickup+". Return "+TRIP.cars.dropoff+".",text:["rental car cars suv pickup truck budget",TRIP.cars.address,TRIP.cars.vehicles.join(" "),TRIP.cars.drive].join(" "),go:"travel"});
+  INDEX.push({kind:"Skiing",cls:"plan",title:"Ski plan, passes, lessons and rental gear",sub:TRIP.ski.days,text:["ski skiing snowboard lift ticket tickets pass passes lesson lessons rental rentals gear helmet",TRIP.ski.facts.join(" "),TRIP.ski.rentals.join(" ")].join(" "),go:"ski"});
+  INDEX.push({kind:"Villa",cls:"plan",title:TRIP.lodging.name,sub:TRIP.lodging.address,text:["hotel villa resort lodging stay check in check out pool kitchen",TRIP.lodging.details.join(" "),TRIP.lodging.checkin,TRIP.lodging.checkout].join(" "),go:"travel:stay"});
+  INDEX.forEach(e=>{e.hay=e.text.toLowerCase();e.t=e.title.toLowerCase();});
+}
+function runSearch(){
+  const q=$("#q").value.trim().toLowerCase();
+  $("#qclear").hidden=!q;
+  if(!q){ show(current==="results"?"home":current); return; }
+  const toks=q.split(/\s+/);
+  const hits=INDEX.filter(e=>toks.every(t=>e.hay.includes(t))).map(e=>({e,s:toks.reduce((n,t)=>n+(e.t.includes(t)?2:0),0)+(e.cls==="plan"?1:0)})).sort((a,b)=>b.s-a.s).map(x=>x.e);
+  const row=e=>`<li>${e.cls==="extra"?'<span class="mk optional" aria-hidden="true"></span>':'<span class="mk confirmed" aria-hidden="true"></span>'}<div><span class="tags" style="margin-bottom:2px"><span class="tag ${e.cls}">${esc(e.kind)}</span></span><button class="linkbtn" data-go="${e.go}" style="font-size:17px;text-align:left"><b>${esc(e.title)}</b></button><br><span class="small">${esc(e.sub)}</span></div></li>`;
+  const plan=hits.filter(e=>e.cls==="plan"), extra=hits.filter(e=>e.cls==="extra");
+  const sec=$("#results");
+  sec.innerHTML=`<h2>Search</h2>`+(hits.length?
+    `<p class="lede">${hits.length} ${hits.length===1?"match":"matches"} for "${esc($("#q").value.trim())}".</p>`+
+    (plan.length?`<h3>In our plan</h3><div class="day"><ul class="items">${plan.map(row).join("")}</ul></div>`:"")+
+    (extra.length?`<h3>Extra ideas</h3><div class="day"><ul class="items">${extra.map(row).join("")}</ul></div>`:"")
+    :`<div class="empty">Nothing in the trip matches "${esc($("#q").value.trim())}". Try a town like Woodstock, a food like BBQ, or a day like Tuesday.</div>`);
+  document.querySelectorAll("main > section").forEach(s=>s.hidden = s.id!=="results");
+}
+$("#q").addEventListener("input",runSearch);
+$("#qclear").addEventListener("click",()=>{ $("#q").value=""; runSearch(); $("#q").focus(); });
+
+/* ---------- photos (Wikipedia lead images, fetched in the visitor's browser) ---------- */
+let PHOTOS=null;
+function paintPhotos(){
+  if(!PHOTOS) return;
+  document.querySelectorAll(".ph[data-wiki]").forEach(el=>{
+    const t=el.dataset.wiki, src=PHOTOS[t]; if(!src||el.dataset.done) return;
+    el.dataset.done="1"; el.classList.remove("none"); el.style.backgroundImage=`url("${src.replace(/"/g,"%22")}")`;
+    el.setAttribute("role","img"); el.setAttribute("aria-label","Photo from the Wikipedia article "+t);
+    el.innerHTML=`<a href="https://en.wikipedia.org/wiki/${encodeURIComponent(t.replace(/ /g,"_"))}" target="_blank" rel="noopener">Photo: Wikipedia</a>`;
+  });
+}
+async function loadPhotos(){
+  const titles=[...new Set(TRIP.places.map(p=>p.wiki).filter(Boolean))];
+  const key="vt26-photos-"+TRIP.updated;
+  try{ const c=JSON.parse(localStorage.getItem(key)||"null"); if(c){ PHOTOS=c; paintPhotos(); return; } }catch(e){}
+  try{
+    const u="https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&redirects=1&prop=pageimages&piprop=thumbnail&pithumbsize=500&pilimit=50&titles="+encodeURIComponent(titles.join("|"));
+    const r=await fetch(u); if(!r.ok) return;
+    const j=await r.json(), q=j.query||{}, hop={};
+    (q.normalized||[]).concat(q.redirects||[]).forEach(x=>hop[x.from]=x.to);
+    const byTitle={}; Object.values(q.pages||{}).forEach(pg=>{ if(pg.thumbnail&&pg.thumbnail.source) byTitle[pg.title]=pg.thumbnail.source; });
+    const out={}; titles.forEach(t=>{ let k=t,n=0; while(hop[k]&&n++<5) k=hop[k]; if(byTitle[k]) out[t]=byTitle[k]; });
+    PHOTOS=out; try{ localStorage.setItem(key,JSON.stringify(out)); }catch(e){}
+    paintPhotos();
+  }catch(e){ /* no photos, the page still works */ }
+}
+
+/* ---------- snow ---------- */
+(function(){ const h=$(".hero"); for(let i=0;i<14;i++){ const f=document.createElement("span"); f.className="flake"; f.style.left=(Math.random()*100)+"%"; f.style.animationDuration=(6+Math.random()*7)+"s"; f.style.animationDelay=(-Math.random()*10)+"s"; h.appendChild(f);} })();
+
+/* ---------- go ---------- */
+renderHome(); renderDays(); renderTravel(); renderSki(); renderExplore(); buildIndex();
+$("#foot").textContent="Plan last updated "+nice(TRIP.updated)+", "+d0(TRIP.updated).getFullYear()+", from the "+TRIP.source+". The live plan is in Wanderlog; this page is the easy-to-read copy.";
+loadPhotos();
+window.__TRIP_TEST__={INDEX,runSearch,show,state,renderExplore,hoursOn};
+})();
+</script>
+</body>
+</html>
