@@ -18,6 +18,10 @@
      Hours arrays run Sunday to Saturday.
      status: "confirmed" | "optional" | "backup"
      src:    "plan" (in the Wanderlog export) | "extra" (curated idea)
+     Food picker: each day has eat: [{ id, meal, note, top }] pointing at
+     food places, plus an optional eatNote. Food places can carry
+     kind ("sit" | "quick" | "shop" | "brew"), order (what to get) and
+     fl: true (a New England name you will not find in Florida).
      ===================================================================== -->
 <script id="trip-data">
 const TRIP = {
@@ -102,7 +106,20 @@ const TRIP = {
   },
 
   days: [
-    { date: "2026-12-26", title: "Arrival", places: ["budget","resort","butcher","maple"], items: [
+    { date: "2026-12-26", title: "Arrival", places: ["budget","resort","butcher","maple"], eatNote: "Brownsville Butcher & Pantry closes at 7:00 PM and is closed Monday, so the big grocery run is easiest on the drive up.",
+    eat: [
+      { id: "hooksett", meal: "On the drive", note: "About an hour out of Logan on I-93 north. Real food, clean restrooms and a tax-free New Hampshire liquor and wine outlet in one stop.", top: true },
+      { id: "santarpios", meal: "Lunch by Logan", note: "A short cab ride from the terminals. Works for Levi and Jess's wait, or for everyone before the 2:00 PM car pickup." },
+      { id: "hannaford", meal: "Groceries on the drive", note: "Right off I-89 exit 20, just before we turn south on I-91. The easiest full grocery run of the week." },
+      { id: "dangelo", meal: "On the drive", note: "Same exit as the grocery stop. A New England sub shop for a fast, cheap dinner in the car." },
+      { id: "phnompenh", meal: "On the drive", note: "Downtown White River Junction, where I-89 meets I-91. Takeout travels well for the last 30 minutes." },
+      { id: "bigfattys", meal: "Dinner on the drive", note: "White River Junction, 30 minutes before the villa. Barbecue that works as takeout for seven." },
+      { id: "tuckerbox", meal: "Dinner on the drive", note: "Turkish dinner from 5:00 PM in White River Junction, if the drive runs late." },
+      { id: "harpoon", meal: "Dinner near the villa", note: "Just off I-91, one exit before ours. Big room that takes a group without a booking." },
+      { id: "butcher", meal: "Groceries", note: "Only if we arrive before 7:00 PM." },
+      { id: "maple", meal: "Dinner at the resort", note: "No driving after a long travel day." }
+    ],
+    items: [
       { time: "6:33 AM", status: "confirmed", text: "Levi and Jess land in Boston on DL 473 from Seattle." },
       { time: "6:00 AM", status: "confirmed", text: "Orlando crew leaves MCO on AA 1706, connects in Philadelphia on AA 4370, lands in Boston at 11:41 AM." },
       { time: "2:00 PM", status: "confirmed", text: "Pick up both rental cars at Budget, Boston Logan.", p: "budget" },
@@ -111,25 +128,79 @@ const TRIP = {
       { status: "optional", text: "Dinner at The Maple Kitchen, right at the resort, 4:00 to 9:00 PM.", p: "maple" },
       { status: "optional", text: "Keep the evening loose in case of travel delays." }
     ] },
-    { date: "2026-12-27", title: "Ski rental pickup and a look around", places: ["totem","apm","saga","storrs"], items: [
+    { date: "2026-12-27", title: "Ski rental pickup and a look around", places: ["totem","apm","saga","storrs"], eatNote: "Stock up today. Brownsville Butcher & Pantry is closed tomorrow.",
+    eat: [
+      { id: "butcher", meal: "Breakfast and groceries", note: "Five minutes away and open from 7:00 AM. Eat, then buy Monday's cook-in supplies, since it is closed tomorrow.", top: true },
+      { id: "frazers", meal: "Breakfast or lunch", note: "Roadside diner on US-5, on the Windsor side of the morning." },
+      { id: "harpoon", meal: "Lunch", note: "Lunch before the drive to Ludlow. Closes at 6:00 PM on Sundays." },
+      { id: "artisanspark", meal: "Cook-in shopping", note: "Cheese, spirits and preserves next to Harpoon." },
+      { id: "singletons", meal: "Groceries on the way", note: "On Route 131, the road we take to Ludlow. Smoked and marinated meats for the villa grill pan." },
+      { id: "outerlimits", meal: "After the rental pickup", note: "Five minutes from the ski shop on the way home." },
+      { id: "nonnos", meal: "Late lunch in Ludlow", note: "Around the corner from the ski shop and open all afternoon." },
+      { id: "loft", meal: "Late lunch in Ludlow", note: "Tavern on the Okemo access road." },
+      { id: "homestyle", meal: "Dinner in Ludlow", note: "Opens 4:30 PM, if the pickup runs long." },
+      { id: "skunk", meal: "Dinner near the villa", note: "Ten minutes from the villa on the Brownsville road. Call for a table for seven." },
+      { id: "windsorstation", meal: "Dinner", note: "Old train station in Windsor. Sunday kitchen closes at 8:00 PM." },
+      { id: "cman", meal: "Dinner", note: "Across the river in Claremont, in a restored mill. Sunday dinner from 4:00 PM." },
+      { id: "marketbasket", meal: "Groceries", note: "The cheap, big grocery run if Saturday's stop got skipped." },
+      { id: "maple", meal: "Dinner at the resort", note: "Zero driving." }
+    ],
+    items: [
       { time: "About 2:00 PM", status: "confirmed", text: "Pick up the three-day ski rentals at Totem Pole Ski Shop in Ludlow. Sunday rental hours are 7:30 AM to 5:00 PM.", p: "totem" },
       { status: "optional", text: "Flexible sightseeing around Windsor, Vermont and Cornish, New Hampshire before the pickup." },
       { status: "optional", text: "American Precision Museum.", p: "apm", warn: "Winter hours are weekdays only, so it looks closed this Sunday." },
       { status: "optional", text: "Saint-Gaudens National Historical Park.", p: "saga", warn: "Buildings are closed for winter. The grounds are open in daylight for a walk." },
       { status: "optional", text: "Storrs Hill Ski Area for a warm-up after the pickup.", p: "storrs", warn: "Sunday hours end at 5:00 PM and it is about an hour from Ludlow, so this is a short late-afternoon session, not an evening one." }
     ] },
-    { date: "2026-12-28", title: "Pico, ski day 1", places: ["pico","longtrail"], items: [
+    { date: "2026-12-28", title: "Pico, ski day 1", places: ["pico","longtrail"], eatNote: "Brownsville Butcher & Pantry, Windsor Station and Long Trail Brewing are listed as closed Mondays. Cook-in supplies need to be in the villa already.",
+    eat: [
+      { id: "bcstore", meal: "Breakfast on the drive", note: "On US-4 about 15 minutes before Pico. Breakfast sandwiches and coffee without leaving the route.", top: true },
+      { id: "sugarspice", meal: "Breakfast or lunch", note: "Five minutes past Pico. Best for anyone sitting out the morning, or a late breakfast after the pass pickup. Closes at 2:00 PM." },
+      { id: "ramuntos", meal: "On the drive home", note: "Pizza in an old woolen mill, 15 minutes down the mountain. Listings disagree about Monday to Wednesday, so call first." },
+      { id: "sante", meal: "Dinner on the drive home", note: "Woodstock village, about halfway home. Reserve for seven." },
+      { id: "publichouse", meal: "Dinner on the drive home", note: "Ten minutes off US-4 in Quechee." },
+      { id: "maple", meal: "Dinner at the resort", note: "The easy fallback, since the butcher is closed today." },
+      { id: "frazers", meal: "Dinner", note: "Diner in Windsor, open until 8:00 PM." }
+    ],
+    items: [
       { time: "Early", status: "confirmed", text: "Drive to Pico Mountain, about 50 to 55 minutes on US-4 through Woodstock. Aim for first chair.", p: "pico" },
       { status: "confirmed", text: "Pick up the six P-Days passes. Johnny buys his military ticket." },
       { status: "optional", text: "Lessons for Anna, Lily and Kaya as needed, booked directly with Pico." },
       { time: "11:00 AM or 1:30 PM", status: "optional", text: "Lunch on either side of the noon rush." },
       { time: "Night before", status: "confirmed", text: "Check newengland511.org for road conditions." }
     ] },
-    { date: "2026-12-29", title: "Pico, ski day 2", places: ["pico","longtrail"], items: [
+    { date: "2026-12-29", title: "Pico, ski day 2", places: ["pico","longtrail"], eatNote: "The Maple Kitchen, Windsor Station and Long Trail Brewing are listed as closed Tuesdays.",
+    eat: [
+      { id: "wfm", meal: "Groceries on the drive home", note: "On US-4 in West Woodstock, right on the way back. Prepared dinners, sandwiches and a butcher counter, so tonight's cook-in can be heat-and-eat.", top: true },
+      { id: "bcstore", meal: "Breakfast on the drive", note: "Same quick stop as Monday." },
+      { id: "sugarspice", meal: "Breakfast or lunch", note: "Five minutes past Pico. Closes at 2:00 PM." },
+      { id: "butcher", meal: "Groceries", note: "Open until 7:00 PM, so it works if we leave Pico by 5:30." },
+      { id: "oakes", meal: "Dinner on the drive home", note: "Woodstock. Dinner from 5:00 PM." },
+      { id: "sante", meal: "Dinner on the drive home", note: "Woodstock village. Reserve for seven." },
+      { id: "publichouse", meal: "Dinner on the drive home", note: "Ten minutes off US-4 in Quechee." },
+      { id: "ramuntos", meal: "On the drive home", note: "Listings disagree about Monday to Wednesday, so call first." },
+      { id: "frazers", meal: "Dinner", note: "Diner in Windsor, open until 8:00 PM." }
+    ],
+    items: [
       { time: "Early", status: "confirmed", text: "Second day at Pico Mountain. Same drive: about 50 to 55 minutes on US-4 through Woodstock.", p: "pico" },
       { time: "Night before", status: "confirmed", text: "Check newengland511.org for road conditions." }
     ] },
-    { date: "2026-12-30", title: "Pico, ski day 3, and gear goes back", places: ["pico","totem","montshire","simonpearce","quechee","wrj"], items: [
+    { date: "2026-12-30", title: "Pico, ski day 3, and gear goes back", places: ["pico","totem","montshire","simonpearce","quechee","wrj"], eatNote: "The Downtown Grocery, The Loft Tavern and The Maple Kitchen are listed as closed Wednesdays. Gear is due back in Ludlow by 5:00 PM, so dinner in Ludlow or Proctorsville saves a trip.",
+    eat: [
+      { id: "mojo", meal: "Dinner after the gear return", note: "Two minutes from the ski shop and open from 4:00 PM. The room is small, so call ahead for seven or take it back to the villa.", top: true },
+      { id: "outerlimits", meal: "Dinner after the gear return", note: "Five minutes toward home from Ludlow. Easier than Mojo for a table of seven." },
+      { id: "nonnos", meal: "Dinner after the gear return", note: "Italian next to the ski shop. Open all day." },
+      { id: "homestyle", meal: "Dinner after the gear return", note: "Opens 4:30 PM on Main Street." },
+      { id: "singletons", meal: "Groceries on the way home", note: "On Route 131 heading back. Listed as open until 7:00 PM." },
+      { id: "bcstore", meal: "Breakfast on the drive", note: "Same quick stop on US-4." },
+      { id: "sugarspice", meal: "Breakfast or lunch", note: "Five minutes past Pico. Closes at 2:00 PM." },
+      { id: "phnompenh", meal: "Bad-weather day", note: "If we skip skiing and wander White River Junction." },
+      { id: "bigfattys", meal: "Bad-weather day", note: "Barbecue in White River Junction." },
+      { id: "tuckerbox", meal: "Bad-weather day", note: "Turkish cafe in White River Junction." },
+      { id: "simonpearce", meal: "Bad-weather day", note: "Lunch above the waterfall in Quechee. Reserve." },
+      { id: "kingarthur", meal: "Bad-weather day", note: "Bakery cafe beside the Montshire Museum." }
+    ],
+    items: [
       { time: "Early", status: "confirmed", text: "Third day at Pico Mountain.", p: "pico" },
       { time: "About 4:00 PM", status: "confirmed", text: "Leave Pico. Leaving a little earlier gives some slack for the gear return." },
       { time: "By 5:00 PM", status: "confirmed", text: "Return all rentals to Totem Pole Ski Shop in Ludlow, about 30 minutes from Pico.", p: "totem" },
@@ -138,13 +209,35 @@ const TRIP = {
       { status: "backup", text: "If the weather is bad: wander Quechee or White River Junction.", p: "quechee" },
       { time: "Night before", status: "confirmed", text: "Check newengland511.org for road conditions." }
     ] },
-    { date: "2026-12-31", title: "Woodstock day and New Year's Eve", places: ["mabi","billings","monvert","sante","oakes","cloudland"], items: [
+    { date: "2026-12-31", title: "Woodstock day and New Year's Eve", places: ["mabi","billings","monvert","sante","oakes","cloudland"], eatNote: "New Year's Eve hours are not posted yet for most of these, and tables for seven go early. Call before driving. Mon Vert Cafe is listed as closed Thursdays.",
+    eat: [
+      { id: "worthy", meal: "Early New Year's Eve dinner", note: "On US-4 just east of Woodstock village. Casual, loud and built for groups, with one of the best beer lists in the state. Go at opening and we are home by 7:00.", top: true },
+      { id: "harpoon", meal: "Early New Year's Eve dinner", note: "Fifteen minutes from the villa, the shortest drive home of any option. Kitchen runs to 8:00 PM on Thursdays." },
+      { id: "windsorstation", meal: "Early New Year's Eve dinner", note: "Opens 4:00 PM in Windsor. Reserve for seven." },
+      { id: "sante", meal: "Lunch or dinner", note: "Thursday lunch 12:00 to 3:00 PM fits the Woodstock day." },
+      { id: "oakes", meal: "Breakfast or dinner", note: "Breakfast before Billings Farm, or dinner from 5:00 PM." },
+      { id: "angkor", meal: "Dinner", note: "Cambodian and Thai in Woodstock, for a change from pub food. Reported as reservation-only." },
+      { id: "ramuntos", meal: "Early dinner", note: "Ten minutes west of Woodstock. Opens 3:00 PM on Thursdays." },
+      { id: "skunk", meal: "Dinner near the villa", note: "Ten minutes from the villa. Call about New Year's Eve." },
+      { id: "wfm", meal: "Cook-in supplies", note: "Prepared food, cheese and dessert for a New Year's Eve spread at the villa." },
+      { id: "sugarbush", meal: "Cheese and maple", note: "Free tastings. Daylight and dry roads only." },
+      { id: "butcher", meal: "Cook-in supplies", note: "Steaks and sausages for the last night. Open until 7:00 PM." },
+      { id: "simonpearce", meal: "Lunch", note: "Quechee, if the day drifts east." },
+      { id: "publichouse", meal: "Lunch or early dinner", note: "By the Quechee covered bridge." },
+      { id: "maple", meal: "Dinner at the resort", note: "Zero driving on New Year's Eve." }
+    ],
+    items: [
       { status: "confirmed", text: "Marsh-Billings-Rockefeller National Historical Park.", p: "mabi", warn: "The mansion and visitor center are closed for winter. The carriage-road trails are open for a walk or snowshoe." },
       { status: "confirmed", text: "Billings Farm & Museum, right next door. Farm animals and, on some days, horse-drawn sleigh rides.", p: "billings" },
       { status: "optional", text: "Meal in Woodstock. Options: Santé, Oakes & Evelyn, Cloudland Farm, Mon Vert Cafe.", p: "sante", warn: "Mon Vert Cafe is listed as closed on Thursdays. New Year's Eve tables go early, so reserve soon." },
       { time: "Evening", status: "confirmed", text: "Back to the villa early. Pack the cars tonight because we leave at about 4:15 AM." }
     ] },
-    { date: "2027-01-01", title: "Heading home", places: ["resort","budget"], items: [
+    { date: "2027-01-01", title: "Heading home", places: ["resort","budget"], eatNote: "Nothing near the villa is open at 4:15 AM. Pack breakfast and coffee the night before.",
+    eat: [
+      { id: "hooksett", meal: "On the drive", note: "We pass the southbound side at about 5:30 AM. The building is open around the clock for restrooms, and the food counters are listed from about 6:00 AM.", top: true },
+      { id: "santarpios", meal: "Lunch by Logan", note: "For Levi and Jess's long wait. New Year's Day hours are not posted, so call first." }
+    ],
+    items: [
       { time: "About 4:15 AM", status: "confirmed", text: "Check out and leave Brownsville.", p: "resort" },
       { time: "7:00 AM", status: "confirmed", text: "Both rental cars are due back at Budget, Boston Logan.", p: "budget" },
       { time: "9:00 AM", status: "confirmed", text: "Orlando crew flies AA 724, landing in Orlando at 12:22 PM." },
@@ -251,85 +344,162 @@ const TRIP = {
       blurb: "Why go: college-town main street with bookshops and coffee. A little past our usual 30 minute limit." },
 
     /* ---------- food: in our plan ---------- */
-    { id: "butcher", name: "Brownsville Butcher & Pantry", type: "food", area: "Brownsville", src: "plan", drive: "5 min",
+    { id: "butcher", kind: "shop", name: "Brownsville Butcher & Pantry", type: "food", area: "Brownsville", src: "plan", drive: "5 min",
       address: "871 Vermont Route 44, Brownsville, VT 05037",
       hours: ["7:00 AM to 7:00 PM","Closed","7:00 AM to 7:00 PM","7:00 AM to 7:00 PM","7:00 AM to 7:00 PM","7:00 AM to 7:00 PM","7:00 AM to 7:00 PM"],
+      order: "A breakfast sandwich or a burger from the kitchen counter, then steaks, sausages and Vermont cheese for the villa.",
       blurb: "Butcher, grocery and kitchen. Our closest spot for cook-in supplies." },
-    { id: "maple", name: "The Maple Kitchen", type: "food", area: "Brownsville", src: "plan", drive: "at the resort",
+    { id: "maple", kind: "sit", name: "The Maple Kitchen", type: "food", area: "Brownsville", src: "plan", drive: "at the resort",
       address: "485 Hotel Road, Brownsville, VT 05037",
       hours: ["4:00 to 9:00 PM","4:00 to 9:00 PM","Closed","Closed","4:00 to 9:00 PM","4:00 to 9:00 PM","4:00 to 9:00 PM"],
       blurb: "The resort's own restaurant. Easy for arrival night." },
-    { id: "windsorstation", name: "Windsor Station Restaurant & Barroom", type: "food", area: "Windsor", src: "plan", drive: "10 to 15 min",
+    { id: "windsorstation", kind: "sit", name: "Windsor Station Restaurant & Barroom", type: "food", area: "Windsor", src: "plan", drive: "10 to 15 min",
       address: "26 Depot Avenue, Windsor, VT 05089",
       hours: ["4:00 to 8:00 PM","Closed","Closed","4:00 to 9:00 PM","4:00 to 9:00 PM","4:00 to 9:00 PM","4:00 to 9:00 PM"],
       blurb: "Dinner in an old train station." },
-    { id: "frazers", name: "Frazer's Place", type: "food", area: "Windsor", src: "plan", drive: "about 15 min",
+    { id: "frazers", kind: "sit", name: "Frazer's Place", type: "food", area: "Windsor", src: "plan", drive: "about 15 min",
       address: "2066 U.S. Route 5 North, Windsor, VT 05089",
       hours: ["7:00 AM to 8:00 PM","7:00 AM to 8:00 PM","7:00 AM to 8:00 PM","7:00 AM to 8:00 PM","7:00 AM to 8:00 PM","7:00 AM to 8:00 PM","7:00 AM to 8:00 PM"],
       blurb: "Roadside diner, open every day." },
-    { id: "homestyle", name: "Homestyle Restaurant", type: "food", area: "Ludlow", src: "plan", drive: "about 35 min",
+    { id: "homestyle", kind: "sit", name: "Homestyle Restaurant", type: "food", area: "Ludlow", src: "plan", drive: "about 35 min",
       address: "119 Main Street, Ludlow, VT 05149",
       hours: ["4:30 to 9:00 PM","Closed","Closed","4:30 to 9:00 PM","4:30 to 9:00 PM","4:30 to 9:00 PM","4:30 to 9:00 PM"],
       blurb: "Dinner spot in Ludlow, handy after the Dec 30 gear return." },
-    { id: "downtowngrocery", name: "The Downtown Grocery", type: "food", area: "Ludlow", src: "plan", drive: "about 35 min",
+    { id: "downtowngrocery", kind: "sit", name: "The Downtown Grocery", type: "food", area: "Ludlow", src: "plan", drive: "about 35 min",
       address: "41 South Depot Street, Ludlow, VT 05149",
       hours: ["Closed","5:30 to 9:00 PM","Closed","Closed","Closed","5:30 to 9:00 PM","5:30 to 9:00 PM"],
       blurb: "Small chef-run dinner restaurant. Limited nights." },
-    { id: "loft", name: "The Loft Tavern", type: "food", area: "Ludlow", src: "plan", drive: "about 35 min",
+    { id: "loft", kind: "sit", name: "The Loft Tavern", type: "food", area: "Ludlow", src: "plan", drive: "about 35 min",
       address: "300 Mountain Road, Ludlow, VT 05149",
       hours: ["11:30 AM to 9:00 PM","Closed","Closed","Closed","3:00 to 9:00 PM","11:30 AM to 10:00 PM","11:30 AM to 10:00 PM"],
       blurb: "Tavern by Okemo." },
-    { id: "nonnos", name: "Nonno's Cucina", type: "food", area: "Ludlow", src: "plan", drive: "about 35 min",
+    { id: "nonnos", kind: "sit", name: "Nonno's Cucina", type: "food", area: "Ludlow", src: "plan", drive: "about 35 min",
       address: "47 South Depot Street, Ludlow, VT 05149",
       hours: ["11:00 AM to 9:00 PM","11:00 AM to 9:00 PM","11:00 AM to 9:00 PM","11:00 AM to 9:00 PM","11:00 AM to 9:00 PM","11:00 AM to 10:00 PM","11:00 AM to 10:00 PM"],
       blurb: "Italian in Ludlow, open on Wed Dec 30 when we return gear." },
-    { id: "oakes", name: "Oakes & Evelyn", type: "food", area: "Woodstock", src: "plan", drive: "about 25 min",
+    { id: "oakes", kind: "sit", name: "Oakes & Evelyn", type: "food", area: "Woodstock", src: "plan", drive: "about 25 min",
       address: "43 Senior Lane, Woodstock, VT 05091",
       hours: ["7:30 to 10:30 AM","7:30 to 10:30 AM","7:30 to 10:30 AM and 5:00 to 9:00 PM","7:30 to 10:30 AM and 5:00 to 9:00 PM","7:30 to 10:30 AM and 5:00 to 9:00 PM","7:30 to 10:30 AM and 5:00 to 9:00 PM","7:30 to 10:30 AM and 5:00 to 9:00 PM"],
       blurb: "Breakfast daily, dinner Tuesday to Saturday. A New Year's Eve dinner option." },
-    { id: "sante", name: "Santé", type: "food", area: "Woodstock", src: "plan", drive: "about 25 min",
+    { id: "sante", kind: "sit", name: "Santé", type: "food", area: "Woodstock", src: "plan", drive: "about 25 min",
       address: "61 Central Street, Woodstock, VT 05091",
       hours: ["Closed","5:00 to 8:30 PM","5:00 to 8:30 PM","5:00 to 8:30 PM","12:00 to 3:00 PM and 5:00 to 8:30 PM","12:00 to 3:00 PM and 5:00 to 9:00 PM","12:00 to 3:00 PM and 5:00 to 9:00 PM"],
       blurb: "Village restaurant with lunch on Thursdays, which fits Dec 31." },
-    { id: "monvert", name: "Mon Vert Cafe", type: "food", area: "Woodstock", src: "plan", drive: "about 25 min",
+    { id: "monvert", kind: "quick", name: "Mon Vert Cafe", type: "food", area: "Woodstock", src: "plan", drive: "about 25 min",
       address: "28 Central Street, Woodstock, VT 05091",
       hours: ["7:30 AM to 5:00 PM","7:30 AM to 5:00 PM","7:30 AM to 5:00 PM","7:30 AM to 5:00 PM","Closed","7:30 AM to 5:00 PM","7:30 AM to 5:00 PM"],
       blurb: "Breakfast and lunch cafe. Listed as closed on Thursdays." },
-    { id: "cloudland", name: "Cloudland Farm", type: "food", area: "Woodstock", src: "plan", drive: "about 35 min",
+    { id: "cloudland", kind: "sit", name: "Cloudland Farm", type: "food", area: "Woodstock", src: "plan", drive: "about 35 min",
       address: "1101 Cloudland Road, Woodstock, VT 05091",
       blurb: "Farm dinners by reservation. Hours are not listed, and the last stretch is a back road, so go in daylight or skip it in snow." },
-    { id: "simonpearce", name: "Simon Pearce", type: "food", area: "Quechee", src: "plan", drive: "25 to 30 min", status: "backup",
+    { id: "simonpearce", kind: "sit", name: "Simon Pearce", type: "food", area: "Quechee", src: "plan", drive: "25 to 30 min", status: "backup",
       address: "1760 Quechee Main Street, Quechee, VT 05059", wiki: "Simon Pearce",
       hours: ["10:00 AM to 6:00 PM","10:00 AM to 4:00 PM","10:00 AM to 4:00 PM","10:00 AM to 6:00 PM","10:00 AM to 6:00 PM","10:00 AM to 8:00 PM","10:00 AM to 8:00 PM"],
       blurb: "Watch glassblowers work, then eat above the waterfall. Reserve the restaurant." },
-    { id: "tuckerbox", name: "Tuckerbox", type: "food", area: "White River Junction", src: "plan", drive: "about 30 min",
+    { id: "tuckerbox", kind: "sit", name: "Tuckerbox", type: "food", area: "White River Junction", src: "plan", drive: "about 30 min",
       address: "1 South Main Street, White River Junction, VT 05001",
       hours: ["9:00 AM to 3:00 PM and 5:00 to 8:00 PM","Closed","9:00 AM to 3:00 PM and 5:00 to 8:00 PM","9:00 AM to 3:00 PM and 5:00 to 8:00 PM","9:00 AM to 3:00 PM and 5:00 to 8:00 PM","9:00 AM to 3:00 PM and 5:00 to 8:30 PM","9:00 AM to 3:00 PM and 5:00 to 8:30 PM"],
       blurb: "Turkish cafe by day, Turkish dinner by night." },
-    { id: "bigfattys", name: "Big Fatty's BBQ", type: "food", area: "White River Junction", src: "plan", drive: "about 30 min",
+    { id: "bigfattys", kind: "sit", name: "Big Fatty's BBQ", type: "food", area: "White River Junction", src: "plan", drive: "about 30 min",
       address: "186 South Main Street, White River Junction, VT 05001",
       hours: ["12:00 to 8:00 PM","Closed","Closed","12:00 to 8:00 PM","12:00 to 8:00 PM","12:00 to 8:00 PM","12:00 to 8:00 PM"],
+      order: "A mixed platter to share and something from the beer list.",
       blurb: "Barbecue and a big beer list." },
-    { id: "publichouse", name: "Public House Pub", type: "food", area: "Quechee", src: "plan", drive: "25 to 30 min",
+    { id: "publichouse", kind: "sit", name: "Public House Pub", type: "food", area: "Quechee", src: "plan", drive: "25 to 30 min",
       address: "20 Public Way, Quechee, VT 05059",
       hours: ["1:00 to 6:45 PM","3:00 to 8:00 PM","3:00 to 8:00 PM","3:00 to 8:00 PM","1:00 to 8:00 PM","12:00 to 8:00 PM","12:00 to 8:00 PM"],
       blurb: "Pub by the Quechee covered bridge." },
 
+    /* ---------- food: picks added for the day-by-day food picker ---------- */
+    { id: "worthy", kind: "sit", name: "Worthy Kitchen", type: "food", area: "Woodstock", src: "extra", drive: "about 25 min",
+      address: "442 East Woodstock Road, Woodstock, VT 05091", phone: "802-457-7281",
+      hours: ["12:00 to 8:00 PM","Closed","Closed","Listings disagree, call first","4:00 to 9:00 PM","4:00 to 9:00 PM","12:00 to 9:00 PM"],
+      order: "The Kitchen Burger or the OG fried chicken sandwich, and whatever rare Vermont beer is on the board.",
+      blurb: "Why go: a locals' craft beer diner with a chalkboard menu of farm-sourced comfort food. Loud, casual and easy with seven. Listings differ by an hour here and there, so check the day's hours." },
+    { id: "skunk", kind: "sit", name: "Skunk Hollow Tavern", type: "food", area: "Hartland Four Corners", src: "extra", drive: "about 10 min",
+      address: "12 Brownsville Road, Hartland Four Corners, VT 05049", phone: "802-436-2139",
+      order: "The burger, the soup of the day and a homemade dessert.",
+      blurb: "Why go: a 1790s tavern that is the neighborhood's living room, and the closest real dinner to the villa. Listed as opening at 5:00 PM and closed Monday and Tuesday. Small rooms, so call ahead for seven." },
+    { id: "mojo", kind: "sit", name: "Mojo Cafe", type: "food", area: "Ludlow", src: "extra", drive: "about 35 min",
+      address: "145 Main Street, Ludlow, VT 05149", phone: "802-228-6656",
+      hours: ["Closed","Closed","4:00 to 8:00 PM","4:00 to 8:00 PM","4:00 to 8:00 PM","12:00 to 9:00 PM","12:00 to 9:00 PM"],
+      order: "The enchurrito, the catfish po' boy or a round of tacos, plus the rotating IPA.",
+      blurb: "Why go: chef-owned Mexican and Cajun cooking from an open kitchen, and the most inventive food in Ludlow. Seating is limited, so call ahead for seven or take it to go." },
+    { id: "outerlimits", kind: "brew", name: "Outer Limits Brewing", type: "food", area: "Proctorsville", src: "extra", drive: "about 30 min",
+      address: "60 Village Green, Proctorsville, VT 05153", phone: "802-287-6100",
+      hours: ["12:00 to 6:00 PM","Closed","Closed","3:00 to 8:00 PM","3:00 to 8:00 PM","3:00 to 8:00 PM","12:00 to 8:00 PM"],
+      order: "Wood-fired pizza and wings with a sampler of the house beers.",
+      blurb: "Why go: family-run brewery in an old mill with a big bar and room for a group, five minutes from Ludlow. These are its listed summer hours and one directory shows it as closed, so call before driving." },
+    { id: "singletons", kind: "shop", name: "Singleton's General Store", type: "food", area: "Proctorsville", src: "extra", drive: "about 30 min",
+      address: "356 Main Street, Proctorsville, VT 05153",
+      order: "House-smoked bacon, bratwurst and marinated steaks for the villa, plus a deli sandwich for the road.",
+      blurb: "Why go: a third-generation general store famous for its smoked and marinated meats, on the road between the villa and Ludlow. Listed as open 8:00 AM to 7:00 PM daily." },
+    { id: "ramuntos", kind: "quick", fl: true, name: "Ramunto's Brick & Brew Pizza", type: "food", area: "Bridgewater", src: "extra", drive: "about 35 min, on the Pico drive",
+      address: "101 Mill Road, Bridgewater, VT 05034", phone: "802-672-1120",
+      hours: ["12:00 to 9:00 PM","Listings disagree, call first","Listings disagree, call first","Listings disagree, call first","3:00 to 9:00 PM","12:00 to 9:00 PM","12:00 to 9:00 PM"],
+      order: "The Garlic Knot pie and an order of wings. Twenty craft beers on tap.",
+      blurb: "Why go: a Vermont and New Hampshire pizza name inside the old Bridgewater woolen mill, with a game room and space for a crowd. The local chamber lists Thursday to Sunday only, while its ordering page lists every day." },
+    { id: "bcstore", kind: "quick", name: "Bridgewater Corners Country Store", type: "food", area: "Bridgewater Corners", src: "extra", drive: "about 40 min, on the Pico drive",
+      address: "5680 U.S. Route 4, Bridgewater Corners, VT 05035", phone: "802-672-6241",
+      order: "A breakfast sandwich and coffee on the way up, or deli sandwiches and soup for the lodge.",
+      blurb: "Why go: a Vermont country store deli is the local answer to a drive-through, and this one is right on US-4. Listed as open seven days. Hours are not posted, so do not count on a pre-dawn stop." },
+    { id: "sugarspice", kind: "sit", name: "Sugar & Spice", type: "food", area: "Mendon", src: "extra", drive: "5 min past Pico",
+      address: "2563 U.S. Route 4, Mendon, VT 05701", phone: "802-773-7832",
+      hours: ["7:00 AM to 2:00 PM","7:00 AM to 2:00 PM","7:00 AM to 2:00 PM","7:00 AM to 2:00 PM","7:00 AM to 2:00 PM","7:00 AM to 2:00 PM","7:00 AM to 2:00 PM"],
+      order: "The Sugar & Spice pancakes with their own maple syrup, and maple ice cream if there is room.",
+      blurb: "Why go: breakfast and lunch inside a working sugarhouse, a few minutes beyond Pico on US-4. A good morning for anyone taking a ski day off. Expect a wait at holiday breakfast time." },
+    { id: "wfm", kind: "shop", name: "Woodstock Farmers' Market", type: "food", area: "Woodstock", src: "extra", drive: "about 30 min, on the Pico drive",
+      address: "979 Woodstock Road, Woodstock, VT 05091", phone: "802-457-3658",
+      order: "Grab-and-go sandwiches, a prepared dinner, a pie from the bakehouse and local cheese.",
+      blurb: "Why go: a year-round specialty grocery with a deli, bakery, meat and seafood counters, directly on the drive home from Pico. Listed as closed Mondays and open roughly 8:00 AM to 6:00 PM other days. Small and busy." },
+    { id: "angkor", kind: "sit", name: "Angkor Wat Restaurant", type: "food", area: "Woodstock", src: "extra", drive: "about 25 min",
+      order: "Ask what Chef Chy is running that night, then share curries and noodle dishes.",
+      blurb: "Why go: chef-owned Cambodian and Thai cooking in Woodstock. A reviewer reported it takes reservations only, so call well ahead for seven and confirm the nights it is open." },
+    { id: "phnompenh", kind: "quick", name: "Phnom Penh Sandwich Station", type: "food", area: "White River Junction", src: "extra", drive: "about 30 min",
+      address: "7 South Main Street, White River Junction, VT 05001",
+      order: "The Phnom Penh sandwich with lemongrass beef, a banh mi, or pho.",
+      blurb: "Why go: a Cambodian family's farmers-market stand that grew into a downtown restaurant. Fast, inexpensive and nothing like home. Older listings show Monday to Saturday, and its ordering page showed lunch hours only, so check before going." },
+    { id: "cman", kind: "sit", fl: true, name: "The Common Man Claremont", type: "food", area: "Claremont NH", src: "extra", drive: "about 25 min",
+      address: "21 Water Street, Claremont, NH 03743", phone: "603-542-6171",
+      order: "Lobster corn chowder, then pot roast or the baked mac and cheese.",
+      blurb: "Why go: New Hampshire's own restaurant family, in a restored brick mill over the Sugar River. Comfort food, big tables. Dinner is listed Friday and Saturday 4:00 to 9:30 PM and Sunday 4:00 to 9:00 PM. Check other nights." },
+    { id: "marketbasket", kind: "shop", fl: true, name: "Market Basket", type: "food", area: "Claremont NH", src: "extra", drive: "about 25 min",
+      address: "345 Washington Street, Claremont, NH 03743",
+      hours: ["7:00 AM to 9:00 PM","7:00 AM to 9:00 PM","7:00 AM to 9:00 PM","7:00 AM to 9:00 PM","7:00 AM to 9:00 PM","7:00 AM to 9:00 PM","7:00 AM to 9:00 PM"],
+      order: "Staples for seven at the lowest prices around, plus the prepared deli case.",
+      blurb: "Why go: the New England supermarket with a cult following, and the cheapest full grocery run near the villa." },
+    { id: "hannaford", kind: "shop", fl: true, name: "Hannaford Supermarket", type: "food", area: "West Lebanon NH", src: "extra", drive: "about 30 min, on the Boston drive",
+      address: "8 Market Street, West Lebanon, NH 03784",
+      order: "The week's cook-in groceries. Beer and wine are sold in the store.",
+      blurb: "Why go: a Maine-based grocery chain you will not see at home, at the last big exit before we turn south. Listed as open 7:00 AM to 9:00 PM." },
+    { id: "dangelo", kind: "quick", fl: true, name: "D'Angelo Grilled Sandwiches", type: "food", area: "West Lebanon NH", src: "extra", drive: "about 30 min, on the Boston drive",
+      address: "Route 12A, West Lebanon, NH 03784",
+      order: "The Number 9: grilled steak, mushrooms, peppers, onions and cheese.",
+      blurb: "Why go: the sub shop New Englanders grew up on, found only in the six New England states. Listed as open 11:00 AM to 8:30 PM. The chain has closed some shops, so confirm this one before planning on it." },
+    { id: "hooksett", kind: "quick", fl: true, name: "Common Man Roadside, Hooksett Welcome Center", type: "food", area: "Hooksett NH", src: "extra", drive: "on the Boston drive, about 1 hr from Logan",
+      address: "530 West River Road, Hooksett, NH 03106",
+      order: "A plate from the Hi-Way Diner or the food court, and something from the bakery case for the car.",
+      blurb: "Why go: the rest stop New Hampshire is proud of, on both sides of I-93, with a diner, a general store of state-made food and a tax-free liquor and wine outlet. The building is open 24 hours. One listing puts the food counters at 6:00 AM to 7:00 PM." },
+    { id: "santarpios", kind: "sit", name: "Santarpio's Pizza", type: "food", area: "Boston", src: "extra", drive: "5 min from Logan Airport",
+      address: "111 Chelsea Street, Boston, MA 02128", phone: "617-567-9871",
+      order: "A sausage and garlic pizza and the grilled lamb skewers.",
+      blurb: "Why go: East Boston's pizza institution, selling pies since 1933 and visible from the airport road. No frills, one size of pizza. Older reviews say cash only, so bring some. Expect a line at peak times." },
+
     /* ---------- food: extra ideas ---------- */
-    { id: "harpoon", name: "Harpoon Riverbend Taps", type: "food", area: "Windsor", src: "extra", drive: "10 to 15 min",
+    { id: "harpoon", kind: "brew", name: "Harpoon Riverbend Taps", type: "food", area: "Windsor", src: "extra", drive: "10 to 15 min",
       address: "336 Ruth Carney Drive, Windsor, VT 05089", phone: "802-674-5491", wiki: "Harpoon Brewery",
       hours: ["11:00 AM to 6:00 PM","11:00 AM to 6:00 PM","11:00 AM to 6:00 PM","11:00 AM to 8:00 PM","11:00 AM to 8:00 PM","11:00 AM to 8:00 PM","11:00 AM to 8:00 PM"],
       blurb: "Why go: brewery taproom with a big room that seats a group, heated huts outside, and the closest brewery to the villa. Order a flight and the pretzel." },
-    { id: "artisanspark", name: "Artisans Park", type: "food", area: "Windsor", src: "extra", drive: "10 to 15 min",
+    { id: "artisanspark", kind: "shop", name: "Artisans Park", type: "food", area: "Windsor", src: "extra", drive: "10 to 15 min",
       address: "71 Artisans Way, Windsor, VT 05089", wiki: "Windsor, Vermont",
       blurb: "Why go: cheese, a distillery, jam makers and glass in one loop next to Harpoon and the sculpture garden. Good cook-in shopping. Shop hours vary, so check before going." },
-    { id: "longtrail", name: "Long Trail Brewing", type: "food", area: "Bridgewater Corners", src: "extra", drive: "on the way home from Pico",
+    { id: "longtrail", kind: "brew", name: "Long Trail Brewing", type: "food", area: "Bridgewater Corners", src: "extra", drive: "on the way home from Pico",
       address: "5520 U.S. Route 4, Bridgewater Corners, VT 05035", phone: "802-672-5011", wiki: "Long Trail Brewing Company", url: "https://longtrail.com/visit-us/",
-      blurb: "Why go: riverside brewpub directly on our US-4 drive back from Pico, about 15 minutes from the mountain. It opens at noon and closes early evening, and sources disagree on Monday and Tuesday, so call before counting on it." },
-    { id: "kingarthur", name: "King Arthur Baking cafe and store", type: "food", area: "Norwich", src: "extra", drive: "about 35 min",
+      blurb: "Why go: riverside brewpub directly on our US-4 drive back from Pico, about 15 minutes from the mountain. Its ordering page lists 12:00 to 6:00 PM and closed Monday and Tuesday, which are two of our three ski days, so call before counting on it." },
+    { id: "kingarthur", kind: "quick", name: "King Arthur Baking cafe and store", type: "food", area: "Norwich", src: "extra", drive: "about 35 min",
       address: "135 U.S. Route 5 South, Norwich, VT 05055", wiki: "King Arthur Baking",
       blurb: "Why go: the flour company's own bakery. Pastries and bread to bring back to the villa. Pairs with the Montshire. Check hours." },
-    { id: "sugarbush", name: "Sugarbush Farm", type: "food", area: "Woodstock", src: "extra", drive: "about 30 min",
+    { id: "sugarbush", kind: "shop", name: "Sugarbush Farm", type: "food", area: "Woodstock", src: "extra", drive: "about 30 min",
       address: "591 Sugarbush Farm Road, Woodstock, VT 05091",
       blurb: "Why go: free tastings of farm cheddar and four grades of maple syrup at a working hill farm. The road in is steep and unpaved, so go in daylight and good weather. Check hours." }
   ],
@@ -426,6 +596,30 @@ ul.plain li{margin:4px 0}
 .dayhours div{display:flex;justify-content:space-between;gap:14px;padding:2px 0}
 .closed{color:#b3261e;font-weight:600}
 
+/* food picker inside each day */
+details.eat{border-top:1px solid var(--line)}
+details.eat>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 16px;background:#eef4f1;font-family:var(--display);font-weight:700;font-size:22px;color:var(--spruce)}
+details.eat>summary::-webkit-details-marker{display:none}
+details.eat>summary .n{font-family:var(--body);font-weight:500;font-size:14.5px;color:var(--mute)}
+details.eat>summary::after{content:"+";margin-left:auto;font-size:28px;line-height:1;font-weight:500}
+details.eat[open]>summary::after{content:"\2212"}
+.eatbody{padding:12px 16px 4px}
+.eatnote{margin:0 0 12px;font-size:15px;background:var(--warnbg);color:var(--warn);border-left:4px solid #e0a020;padding:6px 10px;border-radius:0 6px 6px 0}
+.eatf{margin:0 0 6px;gap:6px}
+.eatf .chip{padding:5px 12px;font-size:15px}
+.eatlist{list-style:none;margin:0;padding:0}
+.eatlist li{padding:12px 0;border-top:1px solid var(--line)}
+.eatlist li:first-child{border-top:0}
+.eatlist li[hidden]{display:none}
+.meal{display:block;font-size:12.5px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--spruce2)}
+.eatname{border:0;background:none;padding:0;cursor:pointer;text-align:left;font-family:var(--display);font-weight:700;font-size:22px;line-height:1.15;color:var(--ink);text-decoration:underline;text-decoration-color:#9db9c7;text-underline-offset:3px}
+.eatlist .tags{margin:5px 0 4px}
+.eatlist p{margin:3px 0 0;font-size:15.5px}
+.eatlist .acts{padding-top:6px}
+.tag.top{background:var(--spruce);color:#fff}
+.tag.fl{background:#e6e0f5;color:#3d2a78}
+.order b{font-weight:600}
+
 /* flights */
 .leg{display:grid;grid-template-columns:auto 1fr;gap:2px 14px;padding:10px 0;border-top:1px solid var(--line)}
 .leg:first-of-type{border-top:0}
@@ -519,6 +713,7 @@ const short = s => { const d=d0(s); return DOW[d.getDay()].slice(0,3)+" "+MON[d.
 const todayStr = () => { const n=new Date(); return n.getFullYear()+"-"+String(n.getMonth()+1).padStart(2,"0")+"-"+String(n.getDate()).padStart(2,"0"); };
 const STATUS = { confirmed:"Confirmed", optional:"Optional", backup:"Backup or weather call" };
 const TYPE = { do:"Things to do", food:"Food and drink", ski:"Skiing", stay:"Where we stay", travel:"Travel" };
+const KIND = { sit:"Sit-down", quick:"Quick and local", shop:"Groceries and provisions", brew:"Brewery" };
 const mk = s => `<span class="mk ${s}" role="img" aria-label="${STATUS[s]}"></span>`;
 const mapUrl = p => "https://www.google.com/maps/dir/?api=1&destination="+encodeURIComponent(p.address||p.name);
 const lookUrl = p => "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(p.name+" "+(p.address||p.area));
@@ -581,16 +776,43 @@ function renderHome(){
 /* ---------- days ---------- */
 function renderDays(){
   const t=todayStr();
-  $("#days").innerHTML=`<h2>Day by day</h2><p class="lede">Times are Eastern. Tap a place name for its address, hours and directions.</p>
+  $("#days").innerHTML=`<h2>Day by day</h2><p class="lede">Times are Eastern. Tap a place name for its address, hours and directions. Each day has a Where to eat list you can filter by town.</p>
     <ul class="legend" style="margin:0 0 16px"><li>${mk("confirmed")} Confirmed</li><li>${mk("optional")} Optional</li><li>${mk("backup")} Backup or weather call</li></ul>`+
   TRIP.days.map(d=>{
     const hrs=(d.places||[]).map(id=>P[id]).filter(p=>p&&p.hours).map(p=>{const h=hoursOn(p,d.date);return `<div><button class="linkbtn" data-go="explore:place-${p.id}">${esc(p.name)}</button><span class="${isClosed(h)?"closed":""}">${esc(h)}</span></div>`;}).join("");
     return `<article class="day${d.date===t?" today":""}" id="day-${d.date}">
       <div class="sign"><span class="dow">${esc(short(d.date))}</span><span class="ttl">${esc(d.title)}</span></div>
       <ul class="items">${d.items.map(i=>`<li>${mk(i.status)}<div>${i.time?`<span class="when">${esc(i.time)}</span>`:""}${esc(i.text)}${i.p&&P[i.p]?` <button class="linkbtn" data-go="explore:place-${i.p}">${esc(P[i.p].type==="travel"||P[i.p].type==="stay"?"Address and directions":"Details")}</button>`:""}${i.warn?`<span class="warn"><b>Heads up.</b> ${esc(i.warn)}</span>`:""}</div></li>`).join("")}</ul>
+      ${eatBlock(d,t)}
       ${hrs?`<div class="dayhours"><b>Listed hours this ${DOW[d0(d.date).getDay()]}</b>${hrs}</div>`:""}
     </article>`;}).join("");
 }
+
+/* ---------- food picker: curated picks for each day, filtered by town ---------- */
+function eatBlock(d,t){
+  const picks=(d.eat||[]).map(e=>({e,p:P[e.id]})).filter(x=>x.p);
+  if(!picks.length) return "";
+  const areas=[...new Set(picks.map(x=>x.p.area))];
+  const chip=(v,label,on)=>`<button type="button" class="chip eatchip" data-area="${esc(v)}" aria-pressed="${on}">${esc(label)}</button>`;
+  const row=({e,p})=>{ const h=hoursOn(p,d.date);
+    return `<li data-area="${esc(p.area)}"><span class="meal">${esc(e.meal)}</span>
+      <button type="button" class="eatname" data-go="explore:place-${p.id}">${esc(p.name)}</button>
+      <div class="tags">${e.top?'<span class="tag top">Top pick</span>':""}<span class="tag">${esc(p.area)}</span>${p.drive?`<span class="tag">${esc(p.drive)}</span>`:""}${p.kind?`<span class="tag">${KIND[p.kind]}</span>`:""}${p.fl?'<span class="tag fl">Not in Florida</span>':""}</div>
+      <div class="openon ${isClosed(h)?"closed":""}">${esc(short(d.date))}: ${h?esc(h):"hours not listed, check first"}</div>
+      <p>${esc(e.note)}</p>
+      ${p.order?`<p class="order"><b>Order:</b> ${esc(p.order)}</p>`:""}
+      <div class="acts">${p.address?`<a href="${mapUrl(p)}" target="_blank" rel="noopener">Directions</a>`:""}${p.phone?`<a href="tel:${p.phone.replace(/\D/g,"")}">${esc(p.phone)}</a>`:""}<a href="${lookUrl(p)}" target="_blank" rel="noopener">Photos and menu</a></div></li>`; };
+  return `<details class="eat"${d.date===t?" open":""}><summary>Where to eat <span class="n">${picks.length} ${picks.length===1?"pick":"picks"}, filter by town</span></summary>
+    <div class="eatbody">${d.eatNote?`<p class="eatnote"><b>Heads up.</b> ${esc(d.eatNote)}</p>`:""}
+      <div class="filters eatf" role="group" aria-label="Filter food picks by town">${chip("all","All towns",true)}${areas.map(a=>chip(a,a,false)).join("")}</div>
+      <ul class="eatlist">${picks.map(row).join("")}</ul></div></details>`;
+}
+document.addEventListener("click",e=>{
+  const c=e.target.closest(".eatchip"); if(!c) return;
+  const box=c.closest("details.eat"), a=c.dataset.area;
+  box.querySelectorAll(".eatchip").forEach(b=>b.setAttribute("aria-pressed", String(b===c)));
+  box.querySelectorAll(".eatlist li").forEach(li=>{ li.hidden = a!=="all" && li.dataset.area!==a; });
+});
 
 /* ---------- travel ---------- */
 function renderTravel(){
@@ -636,9 +858,10 @@ function card(p,day){
   return `<article class="card" id="place-${p.id}">
     <div class="ph none"${p.wiki?` data-wiki="${esc(p.wiki)}"`:""}></div>
     <div class="in"><h4>${esc(p.name)}</h4>
-      <div class="tags"><span class="tag ${p.src}">${p.src==="plan"?"In our plan":"Extra idea"}</span><span class="tag">${esc(p.area)}</span>${p.drive?`<span class="tag">${esc(p.drive)}</span>`:""}${p.status?`<span class="tag">${mk(p.status)} ${STATUS[p.status]}</span>`:""}</div>
+      <div class="tags"><span class="tag ${p.src}">${p.src==="plan"?"In our plan":"Extra idea"}</span><span class="tag">${esc(p.area)}</span>${p.drive?`<span class="tag">${esc(p.drive)}</span>`:""}${p.kind?`<span class="tag">${KIND[p.kind]}</span>`:""}${p.fl?'<span class="tag fl">Not in Florida</span>':""}${p.status?`<span class="tag">${mk(p.status)} ${STATUS[p.status]}</span>`:""}</div>
       ${day?`<div class="openon ${isClosed(h)?"closed":""}">${esc(short(day))}: ${h?esc(h):"hours not listed"}</div>`:""}
       <p>${esc(p.blurb||"")}</p>
+      ${p.order?`<p class="order"><b>Order:</b> ${esc(p.order)}</p>`:""}
       ${p.address?`<p class="small">${esc(p.address)}</p>`:""}
       ${hrsTable}
       <div class="acts">${p.address?`<a href="${mapUrl(p)}" target="_blank" rel="noopener">Directions</a>`:""}${p.phone?`<a href="tel:${p.phone.replace(/\D/g,"")}">${esc(p.phone)}</a>`:""}${p.url?`<a href="${esc(p.url)}" target="_blank" rel="noopener">Website</a>`:""}${p.type==="food"?`<a href="${lookUrl(p)}" target="_blank" rel="noopener">Photos and menu</a>`:""}</div>
@@ -654,7 +877,7 @@ function renderExplore(){
   function rank(p){ const h=hoursOn(p,state.day); return h==null?1:isClosed(h)?2:0; }
   const chip=(k,v,label)=>`<button class="chip" data-f="${k}" data-v="${v}" aria-pressed="${state[k]===v}">${label}</button>`;
   $("#explore").innerHTML=`<h2>Things to do and eat</h2>
-    <p class="lede">Everything saved in the family plan, plus extra ideas within about 30 minutes of the villa. Drive times are from Brownsville and are estimates.</p>
+    <p class="lede">Everything saved in the family plan, plus extra ideas, most within about 30 minutes of the villa. A few food stops sit on the Boston and Pico drives. Drive times are from Brownsville and are estimates.</p>
     <div class="filters" role="group" aria-label="Filters">
       ${chip("type","all","All")}${chip("type","do","Things to do")}${chip("type","food","Food and drink")}${chip("type","ski","Skiing")}
       ${chip("src","plan","In our plan")}${chip("src","extra","Extra ideas")}
@@ -671,7 +894,7 @@ function renderExplore(){
 /* ---------- search ---------- */
 const INDEX=[];
 function buildIndex(){
-  TRIP.places.forEach(p=>INDEX.push({kind:p.src==="extra"?"Extra idea":"In our plan",cls:p.src,title:p.name,sub:[TYPE[p.type],p.area,p.drive].filter(Boolean).join(", "),text:[p.name,p.area,p.address,p.blurb,TYPE[p.type],p.type==="food"?"restaurant eat dinner lunch breakfast":"",(p.hours||[]).join(" ")].join(" "),go:(p.type==="travel"?"travel":p.type==="stay"?"travel:stay":"explore:place-"+p.id)}));
+  TRIP.places.forEach(p=>INDEX.push({kind:p.src==="extra"?"Extra idea":"In our plan",cls:p.src,title:p.name,sub:[TYPE[p.type],p.area,p.drive].filter(Boolean).join(", "),text:[p.name,p.area,p.address,p.blurb,TYPE[p.type],p.type==="food"?"restaurant eat dinner lunch breakfast":"",p.order,KIND[p.kind],p.kind==="quick"?"fast food quick takeout":"",p.kind==="shop"?"grocery groceries store market":"",p.fl?"not in florida new england regional local chain":"",(p.hours||[]).join(" ")].join(" "),go:(p.type==="travel"?"travel":p.type==="stay"?"travel:stay":"explore:place-"+p.id)}));
   TRIP.days.forEach(d=>d.items.forEach(i=>INDEX.push({kind:"Itinerary",cls:"plan",title:short(d.date)+": "+d.title,sub:(i.time?i.time+". ":"")+i.text,text:[nice(d.date),d.title,i.time,i.text,i.warn,STATUS[i.status]].join(" "),go:"days:day-"+d.date})));
   TRIP.flights.forEach(f=>INDEX.push({kind:"Flight",cls:"plan",title:f.legs.map(l=>l.code).join(" + ")+", "+f.group,sub:f.dir+". "+f.legs.map(l=>l.from+" "+l.dep+" to "+l.to+" "+l.arr).join("; "),text:["flight flights plane airport airline",f.group,f.who,f.dir,nice(f.date),f.legs.map(l=>Object.values(l).join(" ")).join(" ")].join(" "),go:"travel"}));
   INDEX.push({kind:"Rental cars",cls:"plan",title:TRIP.cars.company,sub:"Pick up "+TRIP.cars.pickup+". Return "+TRIP.cars.dropoff+".",text:["rental car cars suv pickup truck budget",TRIP.cars.address,TRIP.cars.vehicles.join(" "),TRIP.cars.drive].join(" "),go:"travel"});
@@ -732,7 +955,7 @@ async function loadPhotos(){
 renderHome(); renderDays(); renderTravel(); renderSki(); renderExplore(); buildIndex();
 $("#foot").textContent="Plan last updated "+nice(TRIP.updated)+", "+d0(TRIP.updated).getFullYear()+", from the "+TRIP.source+". The live plan is in Wanderlog; this page is the easy-to-read copy.";
 loadPhotos();
-window.__TRIP_TEST__={INDEX,runSearch,show,state,renderExplore,hoursOn};
+window.__TRIP_TEST__={INDEX,runSearch,show,state,renderExplore,hoursOn,eatBlock};
 })();
 </script>
 </body>

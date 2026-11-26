@@ -30,3 +30,5 @@ Last names, confirmation or loyalty numbers, traveler emails or phone numbers, h
 - `hours`: seven strings, Sunday first. Use `"Closed"` for closed days. Leave `hours` off when not listed.
 - `warn` on a day item shows a "Heads up" note (closed that day, sources disagree).
 - `wiki`: exact English Wikipedia article title used for the photo.
+- Food picker: each day has `eat`, a curated list of `{ id, meal, note, top }` pointing at food places, and an optional `eatNote` heads-up. The page builds the town filter from those places. Mark one pick per day `top: true`, and only list places not known to be closed that date.
+- Food places can carry `kind` (`sit`, `quick`, `shop`, `brew`), `order` (what to get) and `fl: true` (a New England name not found in Florida).

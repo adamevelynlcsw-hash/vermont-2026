@@ -18,7 +18,7 @@ Wanderlog is where I plan. The site is a read-only portal for the six people tra
 5. Edit only the TRIP block and its "updated" date unless I ask for design changes. Push to the repo and confirm the live page loads.
 </instructions>
 
-Always include: flights with times, both rental cars, lodging, ski plan, day-by-day itinerary, saved activities and food with listed hours, search across everything.
+Always include: flights with times, both rental cars, lodging, ski plan, day-by-day itinerary, saved activities and food with listed hours, search across everything, and the Where to eat picker on each day (the `eat` lists: keep them, drop any pick that is closed that date, and add new food places from the export where they fit).
 Always exclude: last names, confirmation and loyalty numbers, traveler emails and phone numbers, health notes. Photos come only from Wikipedia/Wikimedia, with a credit link.
 
 If the export has no date, or drops a traveler or a confirmed booking, ask before changing anything.
